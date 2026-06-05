@@ -16,15 +16,18 @@
 	text-align: center;
 }
 
-.workflow-media img,
-.workflow-image img {
-	width: 100%;
+.workflow-image {
+	display: block;
+	width: min(100%, 520px);
+	height: auto;
+	margin: 0 auto 0.5em;
 	border-radius: 8px;
 }
 
-.workflow-image {
-	max-width: 80%;
-	margin: 1em auto 2em;
+.workflow-image-caption {
+	margin: 0 0 1em;
+	text-align: center;
+	font-size: 0.9em;
 }
 
 @media screen and (max-width: 736px) {
@@ -40,12 +43,4 @@
 	.workflow-image {
 		max-width: 100%;
 	}
-}
-
-.study-area-map {
-	display: block;
-	width: min(100%, 520px);
-	height: auto;
-	margin: 0 auto 2em;
-	border-radius: 8px;
 }

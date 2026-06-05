@@ -1,9 +1,4 @@
 <!DOCTYPE HTML>
-<!--
-	TXT by HTML5 UP
-	html5up.net | @ajlkn
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
--->
 <html>
 	<head>
 		<title>Workflow</title>
@@ -35,17 +30,28 @@
 								</header>
 
 								<section>
-									<img class="study-area-map" src="images/Germany_in_Europe.svg" alt="Germany in Europe" />
+									<img class="workflow-image" src="images/Germany_in_Europe.svg" alt="Germany in Europe" />
+									<div class="workflow-image-caption">Location of Germany in Europe</div>
 									<p>
-										Germany was selected as the case study area. First, we obtained the national boundary from the vector layer containing boundary geometries and group attributes by selecting our group number, <em>1</em>, in the <strong>Group</strong> attribute field.
-										The workflow combines four main data sources:
+										Germany was selected as the case study area. First, we obtained the national boundary from the vector layer containing boundary geometries and group attributes by selecting our group number in the Group attribute field.<br>
+										Environmental and Population data used include:
 									</p>
-									<ul class="data-source-list">
-										<li>CAMS European Air Quality Reanalysis for NO2, PM2.5, and PM10</li>
-										<li>ESRI 10 m Annual Land Cover for 2021 and 2023</li>
-										<li>WorldPop 2023 Population Counts</li>
-										<li>FAO GAUL Level 2 Administrative Boundaries for Germany</li>
+									<ul>
+										<li>
+											<strong>Environmental data</strong>
+											<ul>
+											<li>CAMS air quality reanalysis data (monthly aggregated raster data for year 2021 &amp; 2023)</li>
+											<li>ESRI 10 m Annual Land Cover (2021 &amp; 2023)</li>
+											</ul>
+										</li>
+										<li>
+											<strong>Population Map</strong>
+											<ul>
+											<li>WorldPop population raster (2023)</li>
+											</ul>
+										</li>
 									</ul>
+									<p>All data were reprojected to WGS84 and clipped to the study area using Clip Raster by Mask.</p>
 								</section>
 
 								<header style="text-align: center; font-size: 1.4em;">
@@ -53,60 +59,71 @@
 								</header>
 
 								<section>
+									<p style="margin-bottom: 0.75em;">
+										For each pollutant (NO₂, PM2.5, and PM10), we calculated:
+									</p>
+									<ul style="margin-top: 0; margin-bottom: 1.5em;">
+										<li>December 2023 monthly mean raster derived from CAMS NetCDF data</li>
+										<li>2021 annual average raster</li>
+										<li>2023 annual average raster</li>
+										<li>AMAC map calculated as the 2023 annual average minus the 2021 annual average</li>
+									</ul>
 									<p>
-										CAMS European Air Quality Reanalysis data were processed in QGIS for NO₂, PM₂.₅, and PM₁₀. The December 2023 NetCDF files were loaded as mesh layers, aggregated into monthly mean rasters, and exported as GeoTIFF layers.
+										Because the CAMS monthly dataset did not include the December 2023 raster, we generated it from the raw December 2023 NetCDF file. The file was loaded in QGIS as a mesh layer, aggregated into a monthly mean raster, and exported as a GeoTIFF layer. The annual averages were then calculated from the clipped monthly rasters using the GRASS <code>r.series</code> tool.
 									</p>
 									<p>
-										The December 2023 maps were combined with the monthly pollutant rasters for 2021 and 2023. After clipping all rasters to the Germany boundary, annual average maps were calculated with the GRASS <code>r.series</code> tool. These annual rasters became the base layers for pollutant classification and change detection.
+										Using the five EU concentration classes, we reclassified the 2023 annual average raster for each pollutant.
 									</p>
+									<img class="workflow-image" src="images/EU_concentration_levels.png" alt="EU Concentration Levels" />
+									<div class="workflow-image-caption">EU concentration levels</div>
+									<p>
+										Annual Mean Aggregation Change (AMAC) maps were calculated by subtracting the 2021 annual average from the 2023 annual average. Taking PM2.5 base map as an example, the AMAC map shows the spatial distribution of changes in annual mean PM2.5 concentrations between 2021 and 2023.
+									</p>
+									<img class="workflow-image" src="images/Germany_pm2p5_2021_2023_AMAC_map.png" alt="PM2.5 AMAC map, 2021-2023" />
+									<div class="workflow-image-caption">PM2.5 AMAC map, 2021-2023</div>
 								</section>
 
 								<header style="text-align: center; font-size: 1.4em;">
-									<h2>Step 3: Pollutant Classification & AMAC Mapping</h2>
+									<h2>Step 3: Land Cover Change Analysis</h2>
 								</header>
 
 								<section>
 									<p>
-										The 2023 annual average maps were reclassified into five concentration classes according to the lab threshold tables, with concentration values expressed in µg/m³. The classification was applied separately for NO₂, PM₂.₅, and PM₁₀ so that each pollutant could be compared with land cover and population data using the same five-level structure.
+										We used <code>("LC_2021" × 100) + "LC_2023"</code> to create a land cover transition raster. This encoding records both the original class and the 2023 class for each valid pixel, making the spatial pattern of land cover change across Germany directly visible.
 									</p>
+									<img class="workflow-image" src="images/Germany_LCC_2021_2023.png" alt="Land Cover Changes Map" />
+									<div class="workflow-image-caption">Land Cover Changes Map</div>
 									<p>
-										Annual Mean Aggregation Change (AMAC) maps were then calculated with <code>pollutant_2023 - pollutant_2021</code>. Negative AMAC values indicate areas where concentration decreased between 2021 and 2023, while positive values identify local increases.
+										The assigned pollutant-land cover pairs were NO₂ with Built Area, PM2.5 with Crops, and PM10 with Trees. For each assigned class, pixels were grouped as Stable, Gain, or Loss. The transition masks were then used to summarize AMAC values, showing how pollutant change differs across stable areas and areas of land cover gain or loss.
 									</p>
+									<img class="workflow-image" src="images/pic01.jpg" alt="PM2.5 AMAC by Land Cover Transition" />
+									<div class="workflow-image-caption">PM2.5 AMAC by Land Cover Transition</div>
 								</section>
 
 								<header style="text-align: center; font-size: 1.4em;">
-									<h2>Step 4: Land Cover Change Analysis</h2>
+									<h2>Step 4: Population Exposure & Bivariate Mapping</h2>
 								</header>
 
 								<section>
 									<p>
-										ESRI 10 m Annual Land Cover rasters for 2021 and 2023 were clipped to Germany and combined into a transition raster using <code>("LC_2021" × 100) + "LC_2023"</code>. This encoding records both the original class and the 2023 class for each valid pixel. Area statistics were calculated in EPSG:3035 to use an equal-area reference system.
+										WorldPop 2023 Population Counts were prepared for the Germany boundary and reclassified into five quantile-based classes using <code>r.quantiles</code> and <code>Reclassify by rules</code>.
 									</p>
-									<p>
-										The assigned pollutant-land cover pairs were NO₂ with Built Area, PM₂.₅ with Crops, and PM₁₀ with Trees. For each assigned class, pixels were grouped as Stable, Gain, or Loss. These masks were used to summarize AMAC values by land cover transition, linking pollutant change with the main land cover dynamics.
-									</p>
-								</section>
-
-								<header style="text-align: center; font-size: 1.4em;">
-									<h2>Step 5: Population Exposure & Bivariate Mapping</h2>
-								</header>
-
-								<section>
-									<p>
-										WorldPop 2023 Population Counts were prepared for the Germany boundary and reclassified into five population classes. NoData values inside the study area were handled before classification so that empty cells and valid population cells could be interpreted consistently.
-									</p>
+									<img class="workflow-image" src="images/Germany_Population_2023_5classes.png" alt="Population Density Classes" />
+									<div class="workflow-image-caption">Population Density Classes, 2023</div>
 									<p>
 										FAO GAUL Level 2 administrative boundaries were used as the reporting units. For each district, zonal statistics provided the median population class and the maximum pollutant concentration class. These values were combined with <code>bivariate = pol_class_max × 10 + pop_class_median</code>, creating a 5×5 pollutant-population exposure matrix.
 									</p>
+									<img class="workflow-image" src="images/Germany_pm2p5_2023_bivariate_legend.png" alt="Bivariate Map of PM2.5 and Population Exposure" />
+									<div class="workflow-image-caption">Bivariate Map of PM2.5 and Population Exposure</div>
 								</section>
 
 								<header	style="text-align: center; font-size: 1.4em;">
-									<h2>Step 6: Output Integration & WebGIS Publication</h2>
+									<h2>Step 5: Output Integration & WebGIS Publication</h2>
 								</header>
 
 								<section>
 									<p>
-										The processed outputs were organized for communication through the Results and WebGIS pages. The Results page summarizes annual pollutant averages, concentration classes, AMAC maps, land cover transition statistics, zonal statistics, bivariate exposure layers, and population exposure charts.
+										The processed outputs were organized through the Results and WebGIS pages. The Results page summarizes annual pollutant averages, concentration classes, AMAC maps ...
 									</p>
 									<p>
 										The WebGIS page provides an interactive view of the main spatial outputs. It is designed to support map exploration with pollutant layers, land cover change layers, bivariate exposure layers, legends, and map controls, allowing the workflow results to be inspected directly in the browser.
