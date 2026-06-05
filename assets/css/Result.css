@@ -1,15 +1,54 @@
-
-
-
-.result-figure { margin: 1.5em 0; text-align: center; }
-.result-figure img { display: block; max-width: 100%; height: auto; max-height: 70vh; object-fit: contain; margin: 0 auto; }
-.result-figure.compact-map img { max-height: 65vh; }
-.result-figure.compact-chart img { max-height: 55vh; }
-.result-figure figcaption { margin-top: 0.5em; color: #666; font-size: 0.9em; line-height: 1.35; }
-.results-table, .vertical-table { width: 100%; border-collapse: collapse; margin: 0.75em 0 1.5em 0; }
-.results-table th, .results-table td, .vertical-table th, .vertical-table td { padding: 0.55em 0.75em; border-bottom: 1px solid #ddd; vertical-align: top; }
-.results-table th, .vertical-table th { font-weight: 700; text-align: left; }
-.results-table .num, .vertical-table .num, .num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
-.vertical-table .metric { width: 55%; }
-.table-group { margin: 1.2em 0; }
-.results-table td.na, .results-table .na { color: #bbb; text-align: center; }
+.result-figure { 
+  margin: 1.5em 0; 
+  text-align: center; 
+}
+.result-figure img { 
+  display: block; 
+  max-width: 100%; 
+  height: auto; 
+  max-height: 70vh; 
+  object-fit: contain; 
+  margin: 0 auto; 
+}
+.result-figure.compact-map img { 
+  max-height: 65vh; 
+}
+.result-figure.compact-chart img { 
+  max-height: 55vh; 
+}
+.result-figure figcaption { 
+  margin-top: 0.5em; 
+  color: #666; 
+  font-size: 0.9em; 
+  line-height: 1.35; 
+}
+.results-table, .vertical-table { 
+  width: 100%; 
+  border-collapse: collapse; 
+  margin: 0.75em 0 1.5em 0; 
+}
+.results-table th, .results-table td, 
+.vertical-table th, .vertical-table td { 
+  padding: 0.55em 0.75em; 
+  border-bottom: 1px solid #ddd; 
+  vertical-align: top; 
+}
+.results-table th, .vertical-table th { 
+  font-weight: 700; 
+  text-align: left; 
+}
+.results-table .num, .vertical-table .num, .num { 
+  text-align: right; 
+  font-variant-numeric: tabular-nums; 
+  white-space: nowrap; 
+}
+.vertical-table .metric { 
+  width: 55%; 
+}
+.table-group { 
+  margin: 1.2em 0; 
+}
+.results-table td.na, .results-table .na { 
+  color: #bbb; 
+  text-align: center; 
+}
