@@ -1,0 +1,109 @@
+<!DOCTYPE HTML>
+<!--
+	TXT by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Home</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+	</head>
+	<body class="homepage is-preload">
+		<div id="page-wrapper">
+
+			<nav id="nav">
+				<ul>
+					<li class="current"><a href="index.html">Home</a></li>
+					<li><a href="Workflow.html">Workflow</a></li>
+					<li><a href="Results.html">Results</a></li>
+					<li><a href="WebGIS.html">WebGIS</a></li>
+				</ul>
+			</nav>
+
+			<section id="banner">
+				<h2>Mapping Air Quality in Germany</h2>
+				<p>Land cover transitions, pollutant change, and population exposure, 2021–2023</p>
+			</section>
+
+			<section id="main">
+				<div class="container">
+
+					<section>
+						<header>
+							<h2>From GIS processing to WebGIS results</h2>
+							<p>Germany case study using CAMS air quality reanalysis, ESRI 10 m Annual Land Cover, WorldPop population, and FAO GAUL Level 2 administrative boundaries</p>
+						</header>
+						<p>
+							All datasets were reprojected to WGS84 (EPSG:4326), clipped to Germany, classified, summarised with zonal statistics, and prepared for web publication. The WebGIS supports map interpretation through multiple basemaps, map controls, pollutant layers, bivariate exposure layers, and legends.
+						</p>
+					</section>
+
+					<section>
+						<h2>Overview</h2>
+						<div class="row">
+							<div class="col-3 col-6-medium col-12-small">
+								<section>
+									<a href="#"><img src="images/pic01.jpg" alt="" /></a>
+									<h3><a href="#">Data sources</a></h3>
+									<p>
+										CAMS European Air Quality Reanalysis (2013–2025) provides monthly NO₂, PM₂.₅, and PM₁₀ concentration fields. ESRI 10 m Annual Land Cover provides 2021 and 2023 land-cover maps from the ArcGIS Living Atlas. WorldPop provides unconstrained population counts for 2023 at 100 m resolution. FAO GAUL Level 2 administrative boundaries support district-level exposure analysis.
+									</p>
+								</section>
+							</div>
+							<div class="col-3 col-6-medium col-12-small">
+								<section>
+									<a href="#"><img src="images/pic02.jpg" alt="" /></a>
+									<h3><a href="#">Processing workflow</a></h3>
+									<p>
+										The workflow includes CAMS NetCDF import and mesh aggregation, yearly averaging with r.series, concentration reclassification by EU thresholds, AMAC calculation (2021–2023), land-cover change detection by raster combination, binary transition masks, zonal statistics on pollutant change in transition zones, population quantile classification, bivariate exposure mapping with GAUL Level 2 districts, and dissolved pie-chart preparation.
+									</p>
+								</section>
+							</div>
+							<div class="col-3 col-6-medium col-12-small">
+								<section>
+									<a href="#"><img src="images/pic03.jpg" alt="" /></a>
+									<h3><a href="#">Main results</a></h3>
+									<p>
+										All three pollutant AMAC maps show negative mean change over valid pixels between 2021 and 2023: NO₂ −1.765 µg/m³, PM₂.₅ −1.229 µg/m³, and PM₁₀ −1.657 µg/m³. PM₁₀ Trees-transition zones also return negative mean AMAC values for stable trees, trees gain, and trees loss.
+
+									</p>
+								</section>
+							</div>
+							<div class="col-3 col-6-medium col-12-small">
+								<section>
+									<a href="#"><img src="images/pic04.jpg" alt="" /></a>
+									<h3><a href="#">WebGIS output</a></h3>
+									<p>
+										The WebGIS page displays the produced layers with at least two basemaps (OpenStreetMap and a second basemap), scale line, full-screen control, mouse position, layer controls, and map legends for pollutant change, concentration classes, land-cover transitions, and bivariate exposure classes.
+
+									</p>
+								</section>
+							</div>
+						</div>
+					</section>
+
+				</div>
+			</section>
+
+			<footer id="footer">
+				<div class="container">
+					<div id="copyright">
+						<ul>
+							<li>&copy; Group1_Germany</li><li> <a href="http://html5up.net"></a></li>
+						</ul>
+					</div>
+				</div>
+			</footer>
+
+		</div>
+
+		<script src="assets/js/jquery.min.js"></script>
+		<script src="assets/js/breakpoints.min.js"></script>
+		<script src="assets/js/util.js"></script>
+		<script src="assets/js/main.js"></script>
+
+	</body>
+</html>

@@ -1,0 +1,158 @@
+<!DOCTYPE HTML>
+<!--
+	TXT by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Workflow</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<link rel="stylesheet" href="assets/css/Workflow.css" />
+	</head>
+	<body class="is-preload">
+		<div id="page-wrapper">
+
+			<nav id="nav">
+				<ul>
+					<li><a href="index.html">Home</a></li>
+					<li class="current"><a href="Workflow.html">Workflow</a></li>
+					<li><a href="Results.html">Results</a></li>
+					<li><a href="WebGIS.html">WebGIS</a></li>
+				</ul>
+			</nav>
+
+			<section id="main">
+				<div class="container">
+					<div class="row">
+						<div class="col-12">
+
+							<article>
+
+								<header>
+									<h2>Project Workflow</h2>
+									<p>Air quality, land cover change, and population exposure in Germany</p>
+								</header>
+
+								<section>
+									<img src="images/pic01.jpg" alt="Workflow overview diagram" />
+									<p>
+										All processing uses WGS84 (EPSG:4326) as the working CRS, with an equal area projection (EPSG:3035) applied for land cover area measurement. The workflow covers the full GIS laboratory sequence: Germany case study selection, pollutant and land cover data preparation, change detection between 2021 and 2023, land cover transition analysis, population exposure assessment, and WebGIS and website publication.
+									</p>
+								</section>
+
+								<section>
+									<h3>1. Case Study and Input Data</h3>
+									<p>Germany was selected from the case study boundary layer and exported as a GeoPackage to clip all inputs to the area of interest.</p>
+									<ul>
+										<li><strong>CAMS European Air Quality Reanalysis:</strong> NO₂, PM₂.₅, and PM₁₀ monthly fields at ~0.1° resolution (model Ensemble median, level 0, type Validated Reanalysis). December 2023 was downloaded for the monthly map; the 2021 and 2023 annual fields were used for the change analysis.</li>
+										<li class="workflow-media">
+											<div>
+												<p><strong>ESRI 10 m Annual Land Cover:</strong><br />2021 and 2023 GeoTIFF tiles from the ArcGIS Living Atlas, reprojected to WGS84 and clipped to Germany. Pixel size is 10 m, roughly 0.01 ha per pixel, enough to resolve changes within built up areas.</p>
+											</div>
+											<div>
+												<img src="images/pic01.jpg" alt="Land cover map of Germany" />
+											</div>
+										</li>
+										<li class="workflow-media">
+											<div>
+												<img src="images/pic01.jpg" alt="Population density map of Germany" />
+											</div>
+											<div>
+												<p><strong>WorldPop 2023 Population Counts:</strong><br />Unconstrained population raster at 100 m (3 arcsecond) resolution in WGS84, used for population classification and exposure summaries.</p>
+											</div>
+										</li>
+										<li class="workflow-media">
+											<div>
+												<p><strong>FAO GAUL Level 2 Administrative Boundaries:</strong><br />Polygon vector layer with 402 Level 2 districts covering Germany. Used for zonal statistics, bivariate mapping, and dissolved chart layers.</p>
+											</div>
+											<div>
+												<img src="images/pic01.jpg" alt="Germany administrative boundary map" />
+											</div>
+										</li>
+									</ul>
+								</section>
+
+								<section>
+									<h3>2. Pollutant Processing</h3>
+									<ul>
+										<li>
+											<p><strong>NetCDF import and raster export.</strong> Opened the CAMS NetCDF files in QGIS as mesh layers (CRS WGS84 EPSG:4326). Aggregated December 2023 hourly data to a monthly mean with the Mesh Calculator and exported the result to GeoTIFF.</p>
+											<p class="workflow-image"><img src="images/pic01.jpg" alt="December 2023 pollutant maps" /></p>
+										</li>
+										<li><strong>Clipping.</strong> Clipped monthly pollutant rasters to the Germany boundary GeoPackage.</li>
+										<li><strong>Yearly averaging.</strong> Calculated annual average maps for 2021 and 2023 with <code>r.series</code> (GRASS GIS, accessed through the QGIS Processing Toolbox) using average aggregation. Outputs: Germany_average_no2_2023.tif, Germany_average_pm2p5_2023.tif, and Germany_average_pm10_2023.tif.</li>
+										<li><strong>Concentration classification.</strong>
+											<ul>
+												<li>Reclassified 2023 annual averages into five EU concentration levels using the lab threshold tables (NO₂: ≤10, 10 to 25, 25 to 40, 40 to 50, >50 µg/m³; PM₂.₅: ≤5, 5 to 10, 10 to 20, 20 to 25, >25; PM₁₀: ≤15, 15 to 31, 31 to 40, 40 to 50, >50).</li>
+												<li>Calculated AMAC (Annual Mean Aggregation Change) maps with Raster Calculator: <code>POLLUTANT_2023 − POLLUTANT_2021</code>. Blue tones mark decrease, light tones mark near zero change, red tones mark increase.</li>
+											</ul>
+										</li>
+									</ul>
+								</section>
+
+								<section>
+									<h3>3. Land Cover Change Processing</h3>
+									<ul>
+										<li><strong>Encoding.</strong> Combined the ESRI 2021 and 2023 rasters (reprojected to WGS84, clipped to Germany) with Raster Calculator: <code>("LC_2021" × 100) + "LC_2023"</code>. Set cloud transitions (code 10) to NoData. For area statistics, reprojected the combined raster to EPSG:3035 (ETRS89 extended, LAEA Europe) so pixel areas are in square metres and directly convertible to km².</li>
+										<li><strong>Assigned classes.</strong> NO₂ → Built Area (code 7), PM₂.₅ → Crops (code 5), PM₁₀ → Trees (code 2). Summarised each assigned class as Stable (class stayed the same), Gain (class appeared in 2023 from another valid class), and Loss (class present in 2021 changed to another valid class).</li>
+										<li><strong>Binary change masks.</strong> Built rasters per assigned class with values 1 = Stable, 2 = Gain, 3 = Loss, and −1 = NoData or excluded transitions. Polygonised the masks, dissolved by transition class, and used the dissolved polygons as zone boundaries for zonal statistics on the pollutant AMAC maps.</li>
+									</ul>
+								</section>
+
+								<section>
+									<h3>4. Pollutant Change by Land Cover Transition</h3>
+									<ul>
+										<li><strong>Grid alignment.</strong> The CAMS AMAC rasters are at ~0.1° resolution, about 11 km at Germany's latitude, much coarser than the 10 m ESRI land cover grid. Resampled AMAC maps to the land cover pixel grid with nearest neighbour resampling where needed.</li>
+										<li><strong>Zonal statistics.</strong> Extracted mean, minimum, and maximum AMAC values for the Stable, Gain, and Loss zones by computing raster statistics within each dissolved polygon. NO₂ and PM₁₀ zonal outputs are polygon layers (GeoPackage with geometry); the PM₂.₅ output is a table without geometry (attributes only; would need a join for map display).</li>
+										<li><strong>Results.</strong> All transition zone means came out negative. Concentrations dropped across all three pollutant and class pairs between 2021 and 2023.</li>
+									</ul>
+								</section>
+
+								<section>
+									<h3>5. Population Exposure and Bivariate Mapping</h3>
+									<ul>
+										<li><strong>Population classification.</strong> Processed WorldPop 2023 with <code>r.null</code> (GRASS GIS) to set NoData cells to 0 inside the area of interest, then reclassified into five classes: one class for value 0, plus four classes derived from <code>r.quantile</code>.</li>
+										<li><strong>Bivariate layers.</strong> Used GAUL Level 2 districts as zone boundaries for zonal statistics: computed pop_class_median from the population class raster and pol_class_max from each pollutant concentration class map. Calculated the bivariate field as <code>bivariate = pol_class_max × 10 + pop_class_median</code>, encoding a 5×5 matrix of pollutant by population class across 402 districts. All three pollutants passed the formula check with zero mismatches.</li>
+										<li><strong>Dissolved chart layers.</strong> Dissolved each bivariate layer by pol_class_max. Summed the original (unclassified) population values within each dissolved polygon to produce pop_sum for each concentration class.</li>
+									</ul>
+								</section>
+
+								<section>
+									<h3>6. WebGIS and Website Publication</h3>
+									<ul>
+										<li><strong>Website pages.</strong> Home, Workflow, Results, and WebGIS pages built on a customised HTML5 UP template. Replaced generic placeholder text with descriptions of the data sources, processing steps, and lab outputs.</li>
+										<li><strong>WebGIS.</strong> Built with OpenLayers. Two XYZ tile basemaps (OpenStreetMap plus a second basemap with attribution), plus Scale Line, Full Screen, and Mouse Position controls. The layer switcher covers AMAC maps (GeoTIFF), annual averages, concentration classes, land cover change, bivariate layers (GeoPackage), and chart layers.</li>
+										<li><strong>Legends.</strong> Raster class legends (AMAC decrease, stable, increase; EU concentration classes; Stable, Gain, Loss), the 5×5 bivariate legend, and pie chart summaries displayed alongside the map.</li>
+										<li><strong>Popup attributes.</strong> Zonal statistics polygons show transition zone, mean, min, and max AMAC on click. Bivariate district features show GAUL Level 2 name, pop_class_median, pol_class_max, and bivariate code.</li>
+									</ul>
+								</section>
+
+							</article>
+
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<footer id="footer">
+				<div class="container">
+					<div id="copyright">
+						<ul>
+							<li>&copy; Germany Air Quality Project</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+						</ul>
+					</div>
+				</div>
+			</footer>
+
+		</div>
+
+		<script src="assets/js/jquery.min.js"></script>
+		<script src="assets/js/breakpoints.min.js"></script>
+		<script src="assets/js/util.js"></script>
+		<script src="assets/js/main.js"></script>
+
+	</body>
+</html>

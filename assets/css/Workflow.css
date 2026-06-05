@@ -1,0 +1,43 @@
+.workflow-media {
+	display: flex;
+	align-items: center;
+	gap: 2em;
+	margin: 2em 0;
+	padding-left: 0;
+	list-style: none;
+}
+
+.workflow-media > div {
+	flex: 1;
+}
+
+.workflow-media p {
+	margin: 0;
+	text-align: center;
+}
+
+.workflow-media img,
+.workflow-image img {
+	width: 100%;
+	border-radius: 8px;
+}
+
+.workflow-image {
+	max-width: 80%;
+	margin: 1em auto 2em;
+}
+
+@media screen and (max-width: 736px) {
+	.workflow-media {
+		display: block;
+	}
+
+	.workflow-media p {
+		margin-bottom: 1em;
+		text-align: left;
+	}
+
+	.workflow-image {
+		max-width: 100%;
+	}
+}
