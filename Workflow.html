@@ -57,6 +57,9 @@
                     All data were reprojected to WGS84 and clipped to the study area using
                     <code>Clip Raster by Mask</code>.
                   </p>
+                  <p>
+										<strong>Note.</strong> We observed that QGIS <code>Clip Raster by Mask</code> and <code>GDAL/Python clipping</code> may not always produce same raster sizes. The difference is mainly caused by how the output extent is aligned to the source raster grid. We used QGIS <code>Clip Raster by Mask</code> as the clipping method.
+									</p>
                 </section>
 
                 <header style="text-align: center; font-size: 1.4em">
