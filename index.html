@@ -10,6 +10,8 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link rel="stylesheet" href="assets/css/main.css" />
+		<link rel="stylesheet" href="assets/css/index.css" />
+		
 	</head>
 	<body class="homepage is-preload">
 		<div id="page-wrapper">
@@ -34,10 +36,10 @@
 					<section>
 						<header>
 							<h2>From GIS processing to WebGIS results</h2>
-							<p>Germany case study using CAMS air quality reanalysis, ESRI 10 m Annual Land Cover, WorldPop population, and FAO GAUL Level 2 administrative boundaries</p>
+							<p>Germany case study using CAMS air quality reanalysis, ESRI 10 m Annual Land Cover, WorldPop population, and GAUL Level 2 administrative boundaries</p>
 						</header>
 						<p>
-							All datasets were reprojected to WGS84 (EPSG:4326), clipped to Germany, classified, summarised with zonal statistics, and prepared for web publication. The WebGIS supports map interpretation through multiple basemaps, map controls, pollutant layers, bivariate exposure layers, and legends.
+							All datasets were reprojected to WGS84 (EPSG:4326), clipped to Germany, classified, summarised with zonal statistics, and prepared for web publication. The WebGIS supports map interpretation through multiple basemaps, map controls, pollutant layers, pollutant-population exposure layers, and legends.
 						</p>
 					</section>
 
@@ -46,38 +48,38 @@
 						<div class="row">
 							<div class="col-3 col-6-medium col-12-small">
 								<section>
-									<a href="#"><img src="images/pic01.jpg" alt="" /></a>
+									<a href="#"><img src="images/pic01_data_sources.png" alt="" /></a>
 									<h3><a href="#">Data sources</a></h3>
 									<p>
-										CAMS European Air Quality Reanalysis (2013–2025) provides monthly NO₂, PM₂.₅, and PM₁₀ concentration fields. ESRI 10 m Annual Land Cover provides 2021 and 2023 land-cover maps from the ArcGIS Living Atlas. WorldPop provides unconstrained population counts for 2023 at 100 m resolution. FAO GAUL Level 2 administrative boundaries support district-level exposure analysis.
+										CAMS European air quality reanalysis (NO₂, PM₂.₅, PM₁₀), ESRI 10 m Annual Land Cover (2021 & 2023), WorldPop Population Counts (2023, 100 m), and GAUL Level 2 administrative boundaries. All layers reprojected to WGS84 (EPSG:4326) and clipped to Germany.
 									</p>
 								</section>
 							</div>
 							<div class="col-3 col-6-medium col-12-small">
 								<section>
-									<a href="#"><img src="images/pic02.jpg" alt="" /></a>
+									<a href="#"><img src="images/pic02_processing.png" alt="" /></a>
 									<h3><a href="#">Processing workflow</a></h3>
 									<p>
-										The workflow includes CAMS NetCDF import and mesh aggregation, yearly averaging with r.series, concentration reclassification by EU thresholds, AMAC calculation (2021–2023), land-cover change detection by raster combination, binary transition masks, zonal statistics on pollutant change in transition zones, population quantile classification, bivariate exposure mapping with GAUL Level 2 districts, and dissolved pie-chart preparation.
+										Step 1–2: pollutant monthly & annual average maps. Step 3: concentration maps by EU thresholds. Step 4: Annual Mean Aggregation Change (AMAC, 2021−2023). Step 5: Land Cover Change detection (LCC) with Stability, Gain, and Loss. Step 6: zonal statistics (Mean, Min, Max; prefix Zone_). Step 7–8: pollutant-population exposure and WebGIS.
 									</p>
 								</section>
 							</div>
 							<div class="col-3 col-6-medium col-12-small">
 								<section>
-									<a href="#"><img src="images/pic03.jpg" alt="" /></a>
+									<a href="#"><img src="images/pic03_results.png" alt="" /></a>
 									<h3><a href="#">Main results</a></h3>
 									<p>
-										All three pollutant AMAC maps show negative mean change over valid pixels between 2021 and 2023: NO₂ −1.765 µg/m³, PM₂.₅ −1.229 µg/m³, and PM₁₀ −1.657 µg/m³. PM₁₀ Trees-transition zones also return negative mean AMAC values for stable trees, trees gain, and trees loss.
+										AMAC 2021→2023: NO₂ −1.765, PM₂.₅ −1.229, PM₁₀ −1.657 µg/m³. All transition zones (Stable, Gain, Loss) show negative mean values for Built Area (NO₂), Crops (PM₂.₅), and Trees (PM₁₀). Pollutant-population maps combine pollutant concentration classes with population exposure classes across GAUL Level 2 districts.
 
 									</p>
 								</section>
 							</div>
 							<div class="col-3 col-6-medium col-12-small">
 								<section>
-									<a href="#"><img src="images/pic04.jpg" alt="" /></a>
+									<a href="#"><img src="images/pic04_webgis.png" alt="" /></a>
 									<h3><a href="#">WebGIS output</a></h3>
 									<p>
-										The WebGIS page displays the produced layers with at least two basemaps (OpenStreetMap and a second basemap), scale line, full-screen control, mouse position, layer controls, and map legends for pollutant change, concentration classes, land-cover transitions, and bivariate exposure classes.
+										Interactive WebGIS with OpenStreetMap & CARTO Positron basemaps, pollutant AMAC overlay, pollutant-population exposure layer (GAUL Level 2 districts), land-cover transition zones, scale bar, fullscreen, mouse position, layer switcher, and colour legends.
 
 									</p>
 								</section>
