@@ -11,14 +11,14 @@ const satelliteLayer = new ol.layer.Tile({
 const osmLayer = new ol.layer.Tile({
   title: "OSM",
   type: "base",
-  visible: false,
+  visible: true,
   source: new ol.source.OSM(),
 });
 
 const cartoLayer = new ol.layer.Tile({
   title: "Carto",
   type: "base",
-  visible: true,
+  visible: false,
   source: new ol.source.XYZ({
     url: "https://{a-c}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png",
   }),
@@ -244,10 +244,118 @@ map.addControl(
   }),
 );
 
+const legendControl = document.createElement("div");
+legendControl.className = "legend-control ol-control";
+legendControl.innerHTML = `
+  <div class="legend-title">Legend</div>
+  <div id="legend-content">No overlay selected</div>
+`;
+
+map.addControl(
+  new ol.control.Control({
+    element: legendControl,
+  }),
+);
+
+// Map event popup
+var container = document.createElement("div");
+container.id = "popup";
+container.className = "ol-popup";
+container.innerHTML = `
+  <a href="#" id="popup-closer" class="ol-popup-closer">x</a>
+  <div id="popup-content"></div>
+`;
+document.getElementById("map").appendChild(container);
+
+var content = document.getElementById("popup-content");
+var closer = document.getElementById("popup-closer");
+var popup = new ol.Overlay({
+  element: container,
+});
+
+map.addOverlay(popup);
+
+closer.onclick = function () {
+  popup.setPosition(undefined);
+  closer.blur();
+  return false;
+};
+
+function getVisibleWmsLayers(layers, visibleLayers) {
+  layers.forEach(function (layer) {
+    if (!layer.getVisible()) {
+      return;
+    }
+
+    if (layer instanceof ol.layer.Group) {
+      getVisibleWmsLayers(layer.getLayers(), visibleLayers);
+    } else if (layer.getSource() instanceof ol.source.TileWMS) {
+      visibleLayers.push(layer);
+    }
+  });
+
+  return visibleLayers;
+}
+
+function getFirstVisibleWmsLayer() {
+  const visibleLayers = getVisibleWmsLayers(map.getLayers(), []);
+
+  if (visibleLayers.length === 0) {
+    return null;
+  }
+
+  return visibleLayers[0];
+}
+
+// Legend
+function updateLegend() {
+  var overlayLayer = getFirstVisibleWmsLayer();
+  var legendContent = document.getElementById("legend-content");
+
+  if (overlayLayer == null) {
+    legendControl.style.display = "none";
+    return;
+  }
+
+  legendControl.style.display = "block";
+
+  var layerTitle = overlayLayer.get("title");
+  var legendUrl = overlayLayer.getSource().getLegendUrl(map.getView().getResolution(), {
+    FORMAT: "image/png",
+  });
+
+  legendContent.innerHTML =
+    '<div class="legend-item">' +
+    "<div>" +
+    layerTitle +
+    "</div>" +
+    '<img src="' +
+    legendUrl +
+    '" alt="' +
+    layerTitle +
+    '">' +
+    "</div>";
+}
+
+function listenLayerChanges(layer) {
+  layer.on("change:visible", updateLegend);
+
+  if (layer instanceof ol.layer.Group) {
+    layer.getLayers().forEach(function (childLayer) {
+      listenLayerChanges(childLayer);
+    });
+  }
+}
+
+listenLayerChanges(overlayByCategory);
+listenLayerChanges(overlayByType);
+updateLegend();
+
 document.getElementById("sortCategory").addEventListener("change", function () {
   if (this.checked) {
     map.getLayers().setAt(1, overlayByCategory);
     layerSwitcher.renderPanel();
+    updateLegend();
   }
 });
 
@@ -255,5 +363,42 @@ document.getElementById("sortPollutant").addEventListener("change", function () 
   if (this.checked) {
     map.getLayers().setAt(1, overlayByType);
     layerSwitcher.renderPanel();
+    updateLegend();
   }
+});
+
+// Map event
+map.on("singleclick", function (event) {
+  var overlayLayer = getFirstVisibleWmsLayer();
+
+  if (overlayLayer == null) {
+    popup.setPosition(event.coordinate);
+    content.innerHTML = "<h5>Map Event</h5><br><span>No visible overlay layer</span>";
+    return;
+  }
+
+  var view = map.getView();
+  var url = overlayLayer.getSource().getFeatureInfoUrl(event.coordinate, view.getResolution(), view.getProjection(), {
+    INFO_FORMAT: "text/html",
+    FEATURE_COUNT: 5,
+  });
+
+  popup.setPosition(event.coordinate);
+  content.innerHTML = "<h5>" + overlayLayer.get("title") + "</h5><br><span>Loading...</span>";
+
+  fetch(url)
+    .then(function (response) {
+      return response.text();
+    })
+    .then(function (text) {
+      content.innerHTML = "<h5>" + overlayLayer.get("title") + "</h5><br>" + text;
+    })
+    .catch(function () {
+      content.innerHTML = "<h5>" + overlayLayer.get("title") + "</h5><br><span>No feature information</span>";
+    });
+});
+
+map.on("pointermove", function (event) {
+  var hit = getFirstVisibleWmsLayer() != null;
+  map.getTargetElement().style.cursor = hit ? "pointer" : "";
 });
