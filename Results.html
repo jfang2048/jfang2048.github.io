@@ -42,24 +42,6 @@
 									</p>
 								</section>
 
-								<section>
-									<h3>EU Concentration Class Definitions</h3>
-									<div class="table-group">
-										<table>
-											<thead><tr><th>Class</th><th>NO₂ range</th><th>PM₂.₅ range</th><th>PM₁₀ range</th></tr></thead>
-											<tbody>
-												<tr><td>1 (Low)</td><td>≤ 30 µg/m³</td><td>≤ 15 µg/m³</td><td>≤ 15 µg/m³</td></tr>
-												<tr><td>2 (Moderate)</td><td>&gt; 30 – ≤ 48 µg/m³</td><td>&gt; 15 – ≤ 31 µg/m³</td><td>&gt; 15 – ≤ 31 µg/m³</td></tr>
-												<tr><td>3 (High)</td><td>&gt; 48 – ≤ 60 µg/m³</td><td>&gt; 31 – ≤ 40 µg/m³</td><td>&gt; 31 – ≤ 40 µg/m³</td></tr>
-												<tr><td>4 (Very high)</td><td>&gt; 60 – ≤ 80 µg/m³</td><td>&gt; 40 – ≤ 50 µg/m³</td><td>&gt; 40 – ≤ 50 µg/m³</td></tr>
-												<tr><td>5 (Extreme)</td><td>&gt; 80 µg/m³</td><td>&gt; 50 µg/m³</td><td>&gt; 50 µg/m³</td></tr>
-											</tbody>
-										</table>
-									</div>
-									<p>
-										Population classes are derived from WorldPop 2023 quintiles: Class 1 = lowest 20% population density, …, Class 5 = highest 20%. Bivariate codes combine <strong>pol_class × 10 + pop_class</strong> (e.g., code 32 = pollutant class 3, population class 2).
-									</p>
-								</section>
 
 								<!-- ===== 2023 Annual Pollutant Averages ===== -->
 								<section>
@@ -207,18 +189,18 @@
 										Bivariate population exposure combines pollutant concentration class and population class using <strong>bivariate = pol_class_max × 10 + pop_class_median</strong>. Each bivariate layer has 402 GAUL Level 2 features, required fields are present, and the formula check returned zero mismatches for all three pollutants. The dissolved chart layers summarize exposure by <strong>pol_class_max</strong> using <strong>pop_sum</strong>.
 									</p>
 									<div class="table-group">
-										<h4>Population Exposure Class Definitions</h4>
+										<h4>Concentration Class Definitions</h4>
 										<table>
-											<thead><tr><th>Class</th><th>Pollutant concentration</th><th>Population density</th></tr></thead>
+											<thead><tr><th>Class</th><th>NO₂ [µg/m³]</th><th>PM₂.₅ [µg/m³]</th><th>PM₁₀ [µg/m³]</th></tr></thead>
 											<tbody>
-											<tr><td>1</td><td>Lowest concentration (EU Class 1)</td><td>Lowest 20% (quintile 1)</td></tr>
-											<tr><td>2</td><td>Moderate concentration (EU Class 2)</td><td>Second 20% (quintile 2)</td></tr>
-											<tr><td>3</td><td>High concentration (EU Class 3)</td><td>Third 20% (quintile 3)</td></tr>
-											<tr><td>4</td><td>Very high concentration (EU Class 4)</td><td>Fourth 20% (quintile 4)</td></tr>
-											<tr><td>5</td><td>Extreme concentration (EU Class 5)</td><td>Highest 20% (quintile 5)</td></tr>
+											<tr><td>1</td><td>≤ 10</td><td>≤ 5</td><td>≤ 15</td></tr>
+											<tr><td>2</td><td>&gt; 10 – ≤ 25</td><td>&gt; 5 – ≤ 10</td><td>&gt; 15 – ≤ 31</td></tr>
+											<tr><td>3</td><td>&gt; 25 – ≤ 40</td><td>&gt; 10 – ≤ 20</td><td>&gt; 30 – ≤ 40</td></tr>
+											<tr><td>4</td><td>&gt; 40 – ≤ 50</td><td>&gt; 20 – ≤ 25</td><td>&gt; 40 – ≤ 50</td></tr>
+											<tr><td>5</td><td>&gt; 50</td><td>&gt; 25</td><td>&gt; 50</td></tr>
 											</tbody>
 										</table>
-										<p>Bivariate code = <strong>pol_class × 10 + pop_class</strong> (e.g. 32 = pollutant class 3, population class 2).</p>
+										<p>Bivariate code = <strong>pol_class × 10 + pop_class</strong> (e.g. 32 = pollutant class 3, population class 2). Population classes: 1–5 = WorldPop 2023 quintiles (lowest to highest 20%).</p>
 									</div>
 									<div class="chart-row">
 										<div class="plotly-chart">
