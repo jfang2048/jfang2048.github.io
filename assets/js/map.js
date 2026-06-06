@@ -1,58 +1,259 @@
-const geoserverUrl="https://......./wms";
-const wmsVar = [
-
-{
-    id: "LCC",
-    title: "LCC",
-    layerName: "WORKSPACE:LCC"
-},
-
-{
-    id: "pm10",
-    title: "pm10",
-    layerName: "WORKSPACE:pm10"
-},
-
-{
-    id: "pm25",
-    title: "LCC",
-    layerName: "WORKSPACE:pm25"
-},
-{
-    id: "no2",
-    title: "LCC",
-    layerName: "WORKSPACE:no2"
-}
-
-];
-
-
-const osmLayer = new ol.layer.Tile({
-  source: new ol.source.OSM()
+// 1. Base maps
+const satelliteLayer = new ol.layer.Tile({
+  title: "Satellite",
+  type: "base",
+  visible: false,
+  source: new ol.source.XYZ({
+    url: "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+  }),
 });
 
-const myWmsLayer = {};
+const osmLayer = new ol.layer.Tile({
+  title: "OSM",
+  type: "base",
+  visible: false,
+  source: new ol.source.OSM(),
+});
 
-//const myWmsLayer = new ol.layer.Tile({
-//  source: new ol.source.TileWMS({
-//    url: 'http://set_it:000/geoserver/YOUR_WORKSPACE/wms',
-//    params: {
-//      LAYERS: 'YOUR_WORKSPACE:YOUR_LAYER_NAME',
-//      TILED: true
-//    },
-//    serverType: 'geoserver'
-//  })
-//});
+const cartoLayer = new ol.layer.Tile({
+  title: "Carto",
+  type: "base",
+  visible: true,
+  source: new ol.source.XYZ({
+    url: "https://{a-c}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png",
+  }),
+});
 
+// 2. WMS helper
+const wmsUrl = "https://www.gis-geoserver.polimi.it/geoserver/gisgeoserver_01/wms";
+const workspace = "gisgeoserver_01";
 
-const map = new ol.Map({
-  target: 'map',
+function createWmsLayer(title, layerName, visible = false) {
+  return new ol.layer.Tile({
+    title: title,
+    visible: visible,
+    source: new ol.source.TileWMS({
+      url: wmsUrl,
+      params: {
+        SERVICE: "WMS",
+        VERSION: "1.1.1",
+        LAYERS: `${workspace}:${layerName}`,
+        STYLES: "",
+        FORMAT: "image/png",
+        TRANSPARENT: true,
+        TILED: true,
+      },
+      serverType: "geoserver",
+      crossOrigin: "anonymous",
+    }),
+  });
+}
+
+// 3. Overlay layers by category
+const categoryCamsLayers = new ol.layer.Group({
+  title: "CAMS Monthly",
+  fold: "open",
   layers: [
-    osmLayer,
-    //myWmsLayer
+    createWmsLayer("CAMS NO2 2023-12", "Germany_CAMS_no2_2023_12"),
+    createWmsLayer("CAMS PM10 2023-12", "Germany_CAMS_pm10_2023_12"),
+    createWmsLayer("CAMS PM2.5 2023-12", "Germany_CAMS_pm2p5_2023_12"),
   ],
+});
+
+const categoryAverageLayers = new ol.layer.Group({
+  title: "Annual Average",
+  fold: "open",
+  layers: [
+    createWmsLayer("Average NO2 2023", "Germany_average_no2_2023"),
+    createWmsLayer("Average PM10 2023", "Germany_average_pm10_2023"),
+    createWmsLayer("Average PM2.5 2023", "Germany_average_pm2p5_2023"),
+  ],
+});
+
+const categoryLandCoverLayers = new ol.layer.Group({
+  title: "Land Cover",
+  fold: "open",
+  layers: [
+    createWmsLayer("Land Cover 2021", "Germany_lc_2021"),
+    createWmsLayer("Land Cover 2023", "Germany_lc_2023"),
+    createWmsLayer("Land Cover Change 2021-2023", "Germany_LCC_2021_2023"),
+  ],
+});
+
+const categoryAmacLayers = new ol.layer.Group({
+  title: "AMAC",
+  fold: "open",
+  layers: [
+    createWmsLayer("NO2 2021-2023 AMAC", "Germany_no2_2021_2023_AMAC_map"),
+    createWmsLayer("PM10 2021-2023 AMAC", "Germany_pm10_2021_2023_AMAC_map"),
+    createWmsLayer("PM2.5 2021-2023 AMAC", "Germany_pm2p5_2021_2023_AMAC_map"),
+  ],
+});
+
+const categoryBivariateLayers = new ol.layer.Group({
+  title: "Bivariate",
+  fold: "open",
+  layers: [
+    createWmsLayer("NO2 2023 Bivariate", "Germany_no2_2023_bivariate"),
+    createWmsLayer("PM10 2023 Bivariate", "Germany_pm10_2023_bivariate"),
+    createWmsLayer("PM2.5 2023 Bivariate", "Germany_pm2p5_2023_bivariate"),
+  ],
+});
+
+const categoryChartLayers = new ol.layer.Group({
+  title: "Charts",
+  fold: "open",
+  layers: [
+    createWmsLayer("NO2 2023 Chart", "Germany_no2_2023_chart"),
+    createWmsLayer("PM10 2023 Chart", "Germany_pm10_2023_chart"),
+    createWmsLayer("PM2.5 2023 Chart", "Germany_pm2p5_2023_chart"),
+  ],
+});
+
+const categoryConcentrationLayers = new ol.layer.Group({
+  title: "Concentration Maps",
+  fold: "open",
+  layers: [
+    createWmsLayer("NO2 Concentration Map 2023", "Germany_no2_concentration_map_2023"),
+    createWmsLayer("PM10 Concentration Map 2023", "Germany_pm10_concentration_map_2023"),
+    createWmsLayer("PM2.5 Concentration Map 2023", "Germany_pm2p5_concentration_map_2023"),
+  ],
+});
+
+// 4. Overlay layers by pollutant/type
+const typeNo2Layers = new ol.layer.Group({
+  title: "NO2",
+  fold: "open",
+  layers: [
+    createWmsLayer("CAMS NO2 2023-12", "Germany_CAMS_no2_2023_12"),
+    createWmsLayer("Average NO2 2023", "Germany_average_no2_2023"),
+    createWmsLayer("NO2 2021-2023 AMAC", "Germany_no2_2021_2023_AMAC_map"),
+    createWmsLayer("NO2 2023 Bivariate", "Germany_no2_2023_bivariate"),
+    createWmsLayer("NO2 2023 Chart", "Germany_no2_2023_chart"),
+    createWmsLayer("NO2 Concentration Map 2023", "Germany_no2_concentration_map_2023"),
+  ],
+});
+
+const typePm10Layers = new ol.layer.Group({
+  title: "PM10",
+  fold: "open",
+  layers: [
+    createWmsLayer("CAMS PM10 2023-12", "Germany_CAMS_pm10_2023_12"),
+    createWmsLayer("Average PM10 2023", "Germany_average_pm10_2023"),
+    createWmsLayer("PM10 2021-2023 AMAC", "Germany_pm10_2021_2023_AMAC_map"),
+    createWmsLayer("PM10 2023 Bivariate", "Germany_pm10_2023_bivariate"),
+    createWmsLayer("PM10 2023 Chart", "Germany_pm10_2023_chart"),
+    createWmsLayer("PM10 Concentration Map 2023", "Germany_pm10_concentration_map_2023"),
+  ],
+});
+
+const typePm25Layers = new ol.layer.Group({
+  title: "PM2.5",
+  fold: "open",
+  layers: [
+    createWmsLayer("CAMS PM2.5 2023-12", "Germany_CAMS_pm2p5_2023_12"),
+    createWmsLayer("Average PM2.5 2023", "Germany_average_pm2p5_2023"),
+    createWmsLayer("PM2.5 2021-2023 AMAC", "Germany_pm2p5_2021_2023_AMAC_map"),
+    createWmsLayer("PM2.5 2023 Bivariate", "Germany_pm2p5_2023_bivariate"),
+    createWmsLayer("PM2.5 2023 Chart", "Germany_pm2p5_2023_chart"),
+    createWmsLayer("PM2.5 Concentration Map 2023", "Germany_pm2p5_concentration_map_2023"),
+  ],
+});
+
+const typeLandCoverLayers = new ol.layer.Group({
+  title: "Land Cover",
+  fold: "open",
+  layers: [
+    createWmsLayer("Land Cover 2021", "Germany_lc_2021"),
+    createWmsLayer("Land Cover 2023", "Germany_lc_2023"),
+    createWmsLayer("Land Cover Change 2021-2023", "Germany_LCC_2021_2023"),
+  ],
+});
+
+// 5. Layer groups
+const basemapLayers = new ol.layer.Group({
+  title: "Base Maps",
+  layers: [satelliteLayer, osmLayer, cartoLayer],
+});
+
+const overlayByCategory = new ol.layer.Group({
+  title: "Overlay by Category",
+  visible: true,
+  fold: "open",
+  layers: [
+    categoryCamsLayers,
+    categoryAverageLayers,
+    categoryLandCoverLayers,
+    categoryAmacLayers,
+    categoryBivariateLayers,
+    categoryChartLayers,
+    categoryConcentrationLayers,
+  ],
+});
+
+const overlayByType = new ol.layer.Group({
+  title: "Overlay by Pollutant",
+  visible: true,
+  fold: "open",
+  layers: [typeNo2Layers, typePm10Layers, typePm25Layers, typeLandCoverLayers],
+});
+
+// 6. Map
+const map = new ol.Map({
+  target: "map",
+  layers: [basemapLayers, overlayByCategory],
   view: new ol.View({
-    center: ol.proj.fromLonLat([10.4, 51.2]), 
-    zoom: 6
-  })
+    center: ol.proj.fromLonLat([10.4, 51.2]),
+    zoom: 6,
+  }),
+});
+
+// 7. Controls
+map.addControl(new ol.control.ScaleLine());
+map.addControl(new ol.control.FullScreen());
+
+map.addControl(
+  new ol.control.MousePosition({
+    coordinateFormat: ol.coordinate.createStringXY(4),
+    projection: "EPSG:4326",
+    className: "custom-control",
+    placeholder: "0.0000, 0.0000",
+  }),
+);
+
+const layerSwitcher = new ol.control.LayerSwitcher({});
+map.addControl(layerSwitcher);
+
+const groupingControl = document.createElement("div");
+groupingControl.className = "grouping-control ol-control";
+groupingControl.innerHTML = `
+  <div class="sort-title">Sort</div>
+  <label>
+    <input type="radio" name="overlaySort" id="sortCategory" checked>
+    By category
+  </label>
+  <label>
+    <input type="radio" name="overlaySort" id="sortPollutant">
+    By pollutant
+  </label>
+`;
+
+map.addControl(
+  new ol.control.Control({
+    element: groupingControl,
+  }),
+);
+
+document.getElementById("sortCategory").addEventListener("change", function () {
+  if (this.checked) {
+    map.getLayers().setAt(1, overlayByCategory);
+    layerSwitcher.renderPanel();
+  }
+});
+
+document.getElementById("sortPollutant").addEventListener("change", function () {
+  if (this.checked) {
+    map.getLayers().setAt(1, overlayByType);
+    layerSwitcher.renderPanel();
+  }
 });

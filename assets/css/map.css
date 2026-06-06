@@ -5,32 +5,58 @@ body {
   height: 100%;
 }
 
-#map {
-  position: relative;
-  width: 100%;
-  height: 100%;
+.map-container {
+  width: calc(100% - 60px);
+  max-width: none;
 }
 
-#mapControl {
-  position: absolute;
-  top: 12px;
-  right: 12px;
-  z-index: 1000;
+#map {
+  width: 100%;
+  height: 85vh;
+}
 
+.custom-control {
+  position: absolute;
+  right: 15px;
+  bottom: 30px;
+  background: white;
+  border: 2px solid cadetblue;
+  padding: 10px;
+}
+
+.layer-switcher input {
+  appearance: auto;
+  -webkit-appearance: auto;
+  -moz-appearance: auto;
+}
+
+.layer-switcher {
+  top: 11.5em;
+  right: 0.5em;
+}
+
+.grouping-control {
+  position: absolute;
+  top: 3.5em;
+  right: 0.5em;
+  left: auto;
+  z-index: 1000;
   background: white;
   padding: 10px;
-  border: 1px solid #999;
-  font-family: Arial, sans-serif;
-  font-size: 13px;
 }
 
-#mapControl label {
-  display: block;
-  margin-top: 6px;
+.grouping-control .sort-title {
+  font-weight: bold;
+  margin-bottom: 4px;
 }
 
-#legend img {
+.grouping-control label {
   display: block;
-  margin-top: 6px;
-  max-width: 180px;
+  margin-top: 8px;
+}
+
+.grouping-control input {
+  appearance: auto;
+  -webkit-appearance: auto;
+  -moz-appearance: auto;
 }
