@@ -1,260 +1,566 @@
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <!--
 	TXT by HTML5 UP
 	html5up.net | @ajlkn
 	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
 -->
 <html>
-	<head>
-		<title>Results</title>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<link rel="stylesheet" href="assets/css/main.css" />
-		<link rel="stylesheet" href="Result.css" />
-	</head>
-	<body class="is-preload">
-		<div id="page-wrapper">
+  <head>
+    <title>Results</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="assets/css/main.css" />
+    <link rel="stylesheet" href="Result.css" />
+  </head>
+  <body class="is-preload">
+    <div id="page-wrapper">
+      <nav id="nav">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="Workflow.html">Workflow</a></li>
+          <li class="current"><a href="Results.html">Results</a></li>
+          <li><a href="WebGIS.html">WebGIS</a></li>
+        </ul>
+      </nav>
 
-			<nav id="nav">
-				<ul>
-					<li><a href="index.html">Home</a></li>
-					<li><a href="Workflow.html">Workflow</a></li>
-					<li class="current"><a href="Results.html">Results</a></li>
-					<li><a href="WebGIS.html">WebGIS</a></li>
-				</ul>
-			</nav>
+      <section id="main">
+        <div class="container">
+          <div class="row">
+            <div class="col-12">
+              <article>
+                <header>
+                  <h2>Results</h2>
+                  <p>Pollutant change, land-cover transitions, and population exposure</p>
+                </header>
 
-			<section id="main">
-				<div class="container">
-					<div class="row">
-						<div class="col-12">
+                <section>
+                  <p>
+                    The processing produced the required pollutant rasters, land-cover change layer, binary change
+                    masks, zonal statistics, bivariate population exposure layers, and dissolved chart layers. Results
+                    are reported for Germany using valid pixels and the lab classification rules.
+                  </p>
+                </section>
 
-							<article>
+                <!-- ===== 2023 Annual Pollutant Averages ===== -->
+                <section>
+                  <h3>2023 Annual Pollutant Averages</h3>
+                  <div class="table-group">
+                    <table>
+                      <thead>
+                        <tr>
+                          <th>Metric</th>
+                          <th>NO₂</th>
+                          <th>PM₂.₅</th>
+                          <th>PM₁₀</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>Minimum concentration [µg/m³]</td>
+                          <td>2.342</td>
+                          <td>5.126</td>
+                          <td>6.418</td>
+                        </tr>
+                        <tr>
+                          <td>Maximum concentration [µg/m³]</td>
+                          <td>20.166</td>
+                          <td>10.174</td>
+                          <td>15.993</td>
+                        </tr>
+                        <tr>
+                          <td>Mean concentration [µg/m³]</td>
+                          <td>7.646</td>
+                          <td>7.485</td>
+                          <td>11.244</td>
+                        </tr>
+                        <tr>
+                          <td>Classes present</td>
+                          <td>1–2</td>
+                          <td>2–3</td>
+                          <td>1–2</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <p>
+                    The annual average concentration pollutant maps fall within the lower lab EU concentration classes
+                    across Germany. NO₂ and PM₁₀ contain classes 1–2. PM₂.₅ contains classes 2–3, with class 3 present
+                    only in a very small number of valid class-raster pixels.
+                  </p>
+                </section>
 
-								<header>
-									<h2>Results</h2>
-									<p>Pollutant change, land-cover transitions, and population exposure</p>
-								</header>
+                <!-- ===== AMAC 2021–2023 ===== -->
+                <section>
+                  <h3>Annual Mean Aggregation Change (AMAC), 2021–2023</h3>
+                  <div class="table-group">
+                    <table>
+                      <thead>
+                        <tr>
+                          <th>Metric</th>
+                          <th>NO₂</th>
+                          <th>PM₂.₅</th>
+                          <th>PM₁₀</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>Minimum AMAC [µg/m³]</td>
+                          <td>-8.434</td>
+                          <td>-2.791</td>
+                          <td>-4.275</td>
+                        </tr>
+                        <tr>
+                          <td>Maximum AMAC [µg/m³]</td>
+                          <td>1.886</td>
+                          <td>0.339</td>
+                          <td>0.286</td>
+                        </tr>
+                        <tr>
+                          <td>Mean AMAC [µg/m³]</td>
+                          <td>-1.765</td>
+                          <td>-1.229</td>
+                          <td>-1.657</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <p>
+                    All three Annual Mean Aggregation Change maps have negative mean values over valid pixels,
+                    indicating an average concentration decrease from 2021 to 2023. Positive AMAC values occur locally,
+                    so the maps should be interpreted spatially as well as statistically.
+                  </p>
+                </section>
 
-								<section>
-									<p>
-										The processing produced the required pollutant rasters, land-cover change layer, binary change masks, zonal statistics, bivariate population exposure layers, and dissolved chart layers. Results are reported for Germany using valid pixels and the lab classification rules.
-									</p>
-								</section>
+                <!-- ===== Land-Cover Transition ===== -->
+                <section>
+                  <h3>Land-Cover Transition: NO₂ / Built Area, PM₂.₅ / Crops, PM₁₀ / Trees</h3>
+                  <p>
+                    Assigned land-cover binary change masks use code 7 for NO₂ / Built Area, code 5 for PM₂.₅ / Crops,
+                    and code 2 for PM₁₀ / Trees. Values 1, 2, and 3 represent Stable class, class Gain, and class Loss;
+                    NoData, unrelated transitions, and cloud transitions (code 10) are excluded. Statistics are
+                    calculated from the <em>Germany_LCC_2021_2023</em> EPSG:3035 equal-area raster (QGIS unique values
+                    report). Pixel percent and area percent are computed within the Stable + Gain + Loss denominator for
+                    each assigned class.
+                  </p>
+                  <div class="table-group">
+                    <table>
+                      <thead>
+                        <tr>
+                          <th>Transition</th>
+                          <th>Metric</th>
+                          <th>NO₂ / Built Area</th>
+                          <th>PM₂.₅ / Crops</th>
+                          <th>PM₁₀ / Trees</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td rowspan="4">Stable</td>
+                          <td>Pixel count</td>
+                          <td>419,336,145</td>
+                          <td>1,927,372,570</td>
+                          <td>1,281,374,742</td>
+                        </tr>
+                        <tr>
+                          <td>Pixel %</td>
+                          <td>91.307%</td>
+                          <td>93.901%</td>
+                          <td>93.058%</td>
+                        </tr>
+                        <tr>
+                          <td>Area [km²]</td>
+                          <td>37,388.659</td>
+                          <td>171,847.518</td>
+                          <td>114,249.353</td>
+                        </tr>
+                        <tr>
+                          <td>Area %</td>
+                          <td>91.307%</td>
+                          <td>93.901%</td>
+                          <td>93.058%</td>
+                        </tr>
+                        <tr>
+                          <td rowspan="4">Gain</td>
+                          <td>Pixel count</td>
+                          <td>24,879,929</td>
+                          <td>53,907,177</td>
+                          <td>51,381,506</td>
+                        </tr>
+                        <tr>
+                          <td>Pixel %</td>
+                          <td>5.417%</td>
+                          <td>2.626%</td>
+                          <td>3.731%</td>
+                        </tr>
+                        <tr>
+                          <td>Area [km²]</td>
+                          <td>2,218.333</td>
+                          <td>4,806.447</td>
+                          <td>4,581.255</td>
+                        </tr>
+                        <tr>
+                          <td>Area %</td>
+                          <td>5.417%</td>
+                          <td>2.626%</td>
+                          <td>3.731%</td>
+                        </tr>
+                        <tr>
+                          <td rowspan="4">Loss</td>
+                          <td>Pixel count</td>
+                          <td>15,043,313</td>
+                          <td>71,284,047</td>
+                          <td>44,212,722</td>
+                        </tr>
+                        <tr>
+                          <td>Pixel %</td>
+                          <td>3.276%</td>
+                          <td>3.473%</td>
+                          <td>3.211%</td>
+                        </tr>
+                        <tr>
+                          <td>Area [km²]</td>
+                          <td>1,341.285</td>
+                          <td>6,355.796</td>
+                          <td>3,942.075</td>
+                        </tr>
+                        <tr>
+                          <td>Area %</td>
+                          <td>3.276%</td>
+                          <td>3.473%</td>
+                          <td>3.211%</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <div class="table-group">
+                    <h4>PM₁₀ / Trees — Transition Explanation</h4>
+                    <table>
+                      <tbody>
+                        <tr>
+                          <th>Tree persistence</th>
+                          <td>96.665%</td>
+                        </tr>
+                        <tr>
+                          <th>Main sources of Trees Gain</th>
+                          <td>Crops 58.017%; Rangeland 32.619%; Built Area 6.792%</td>
+                        </tr>
+                        <tr>
+                          <th>Main destinations of Trees Loss</th>
+                          <td>Rangeland 43.173%; Crops 42.691%; Built Area 12.187%</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <div class="table-group">
+                    <h4>PM₂.₅ / Crops — Area Change 2021–2023</h4>
+                    <table>
+                      <tbody>
+                        <tr>
+                          <th>2021 Crops area</th>
+                          <td>178,203.314 km²</td>
+                        </tr>
+                        <tr>
+                          <th>2023 Crops area</th>
+                          <td>176,653.965 km²</td>
+                        </tr>
+                        <tr>
+                          <th>Area change</th>
+                          <td>−1,549.349 km²</td>
+                        </tr>
+                        <tr>
+                          <th>Percent point change</th>
+                          <td>−0.4333</td>
+                        </tr>
+                        <tr>
+                          <th>Other changes</th>
+                          <td>Built Area +877.048 km²; Trees +639.180 km²; Rangeland +100.205 km²</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </section>
 
+                <!-- ===== Pollutant Change by Land-Cover Transition (Zonal) ===== -->
+                <section>
+                  <h3>Pollutant Change by Land-Cover Transition: NO₂ / Built Area, PM₂.₅ / Crops, PM₁₀ / Trees</h3>
+                  <p>
+                    Zonal statistics of AMAC raster values summarised by land-cover transition zone. Source:
+                    <em>Germany_*_zonal_statistics_2021_2023.gpkg</em> (EPSG:4326).
+                  </p>
+                  <div class="table-group">
+                    <h4>Transition Zone Classes (1 = Stable, 2 = Gain, 3 = Loss)</h4>
+                    <table>
+                      <thead>
+                        <tr>
+                          <th>Zone</th>
+                          <th>Meaning</th>
+                          <th>NO₂</th>
+                          <th>PM₂.₅</th>
+                          <th>PM₁₀</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>1</td>
+                          <td>Stable — land cover unchanged 2021→2023</td>
+                          <td>Built Area</td>
+                          <td>Crops</td>
+                          <td>Trees</td>
+                        </tr>
+                        <tr>
+                          <td>2</td>
+                          <td>Gain — land cover added</td>
+                          <td>Built Area</td>
+                          <td>Crops</td>
+                          <td>Trees</td>
+                        </tr>
+                        <tr>
+                          <td>3</td>
+                          <td>Loss — land cover removed</td>
+                          <td>Built Area</td>
+                          <td>Crops</td>
+                          <td>Trees</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <div class="table-group">
+                    <h4>Zonal Statistics — AMAC [µg/m³]</h4>
+                    <table>
+                      <thead>
+                        <tr>
+                          <th>Pollutant</th>
+                          <th>Zone</th>
+                          <th>Mean</th>
+                          <th>Min</th>
+                          <th>Max</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td rowspan="3">NO₂ / Built Area</td>
+                          <td>1 · Stable</td>
+                          <td>-2.034</td>
+                          <td>-8.434</td>
+                          <td>1.763</td>
+                        </tr>
+                        <tr>
+                          <td>2 · Gain</td>
+                          <td>-1.843</td>
+                          <td>-3.012</td>
+                          <td>-0.299</td>
+                        </tr>
+                        <tr>
+                          <td>3 · Loss</td>
+                          <td>-1.970</td>
+                          <td>-4.495</td>
+                          <td>-0.346</td>
+                        </tr>
+                        <tr>
+                          <td rowspan="3">PM₂.₅ / Crops</td>
+                          <td>1 · Stable</td>
+                          <td>-1.234</td>
+                          <td>-2.791</td>
+                          <td>0.339</td>
+                        </tr>
+                        <tr>
+                          <td>2 · Gain</td>
+                          <td>-1.258</td>
+                          <td>-2.791</td>
+                          <td>0.339</td>
+                        </tr>
+                        <tr>
+                          <td>3 · Loss</td>
+                          <td>-1.201</td>
+                          <td>-2.791</td>
+                          <td>0.339</td>
+                        </tr>
+                        <tr>
+                          <td rowspan="3">PM₁₀ / Trees</td>
+                          <td>1 · Stable</td>
+                          <td>-1.654</td>
+                          <td>-4.275</td>
+                          <td>0.002</td>
+                        </tr>
+                        <tr>
+                          <td>2 · Gain</td>
+                          <td>-1.650</td>
+                          <td>-3.289</td>
+                          <td>-0.499</td>
+                        </tr>
+                        <tr>
+                          <td>3 · Loss</td>
+                          <td>-1.552</td>
+                          <td>-3.391</td>
+                          <td>-0.503</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <div class="chart-row">
+                    <div class="plotly-chart">
+                      <h4>NO₂ / Built Area</h4>
+                      <iframe
+                        src="charts/no2_barchart_minmaxmean.html"
+                        frameborder="0"
+                        scrolling="no"
+                        style="width: 100%; height: 350px"
+                      ></iframe>
+                    </div>
+                    <div class="plotly-chart">
+                      <h4>PM₂.₅ / Crops</h4>
+                      <iframe
+                        src="charts/pm2p5_barchart_minmaxmean.html"
+                        frameborder="0"
+                        scrolling="no"
+                        style="width: 100%; height: 350px"
+                      ></iframe>
+                    </div>
+                    <div class="plotly-chart">
+                      <h4>PM₁₀ / Trees</h4>
+                      <iframe
+                        src="charts/pm10_barchart_minmaxmean.html"
+                        frameborder="0"
+                        scrolling="no"
+                        style="width: 100%; height: 350px"
+                      ></iframe>
+                    </div>
+                  </div>
+                  <p>
+                    All transition-zone means are negative. PM₁₀ stable tree and tree gain zones show similar decreases
+                    (~ −1.65 µg/m³), tree loss is slightly weaker (~ −1.55 µg/m³). For PM₂.₅, crops gain shows the
+                    strongest mean decrease. For NO₂, stable Built Area has the strongest mean decrease.
+                  </p>
+                </section>
 
-								<!-- ===== 2023 Annual Pollutant Averages ===== -->
-								<section>
-									<h3>2023 Annual Pollutant Averages</h3>
-									<div class="table-group">
-										<table>
-											<thead><tr><th>Metric</th><th>NO₂</th><th>PM₂.₅</th><th>PM₁₀</th></tr></thead>
-											<tbody>
-											<tr><td>Minimum concentration [µg/m³]</td><td>2.342</td><td>5.126</td><td>6.418</td></tr>
-											<tr><td>Maximum concentration [µg/m³]</td><td>20.166</td><td>10.174</td><td>15.993</td></tr>
-											<tr><td>Mean concentration [µg/m³]</td><td>7.646</td><td>7.485</td><td>11.244</td></tr>
-											<tr><td>Classes present</td><td>1–2</td><td>2–3</td><td>1–2</td></tr>
-											</tbody>
-										</table>
-									</div>
-									<p>
-										The annual average concentration pollutant maps fall within the lower lab EU concentration classes across Germany. NO₂ and PM₁₀ contain classes 1–2. PM₂.₅ contains classes 2–3, with class 3 present only in a very small number of valid class-raster pixels.
-									</p>
-								</section>
+                <!-- ===== Population Exposure ===== -->
+                <section>
+                  <h3>Population Exposure and Bivariate Results</h3>
+                  <p>
+                    Bivariate population exposure combines pollutant concentration class and population class using
+                    <strong>bivariate = pol_class_max × 10 + pop_class_median</strong>. Each bivariate layer has 402
+                    GAUL Level 2 features, required fields are present, and the formula check returned zero mismatches
+                    for all three pollutants. The dissolved chart layers summarize exposure by
+                    <strong>pol_class_max</strong> using <strong>pop_sum</strong>.
+                  </p>
+                  <div class="table-group">
+                    <h4>Concentration Class Definitions</h4>
+                    <table>
+                      <thead>
+                        <tr>
+                          <th>Class</th>
+                          <th>NO₂ [µg/m³]</th>
+                          <th>PM₂.₅ [µg/m³]</th>
+                          <th>PM₁₀ [µg/m³]</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>1</td>
+                          <td>≤ 10</td>
+                          <td>≤ 5</td>
+                          <td>≤ 15</td>
+                        </tr>
+                        <tr>
+                          <td>2</td>
+                          <td>&gt; 10 – ≤ 25</td>
+                          <td>&gt; 5 – ≤ 10</td>
+                          <td>&gt; 15 – ≤ 31</td>
+                        </tr>
+                        <tr>
+                          <td>3</td>
+                          <td>&gt; 25 – ≤ 40</td>
+                          <td>&gt; 10 – ≤ 20</td>
+                          <td>&gt; 30 – ≤ 40</td>
+                        </tr>
+                        <tr>
+                          <td>4</td>
+                          <td>&gt; 40 – ≤ 50</td>
+                          <td>&gt; 20 – ≤ 25</td>
+                          <td>&gt; 40 – ≤ 50</td>
+                        </tr>
+                        <tr>
+                          <td>5</td>
+                          <td>&gt; 50</td>
+                          <td>&gt; 25</td>
+                          <td>&gt; 50</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    <p>
+                      Bivariate code = <strong>pol_class × 10 + pop_class</strong> (e.g. 32 = pollutant class 3,
+                      population class 2). Population classes: 1–5 = WorldPop 2023 quintiles (lowest to highest 20%).
+                    </p>
+                  </div>
+                  <div class="chart-row">
+                    <div class="plotly-chart">
+                      <h4>NO₂ Exposure</h4>
+                      <iframe
+                        src="charts/no2_exposure_piechart.html"
+                        frameborder="0"
+                        scrolling="no"
+                        style="width: 100%; height: 350px"
+                      ></iframe>
+                    </div>
+                    <div class="plotly-chart">
+                      <h4>PM₂.₅ Exposure</h4>
+                      <iframe
+                        src="charts/pm2p5_exposure_piechart.html"
+                        frameborder="0"
+                        scrolling="no"
+                        style="width: 100%; height: 350px"
+                      ></iframe>
+                    </div>
+                    <div class="plotly-chart">
+                      <h4>PM₁₀ Exposure</h4>
+                      <iframe
+                        src="charts/pm10_exposure_piechart.html"
+                        frameborder="0"
+                        scrolling="no"
+                        style="width: 100%; height: 350px"
+                      ></iframe>
+                    </div>
+                  </div>
+                  <p>
+                    NO₂ exposure is mostly class 2. PM₂.₅ exposure is almost entirely class 2. PM₁₀ exposure is mostly
+                    class 1, with a smaller class 2 component.
+                  </p>
+                </section>
 
-								<!-- ===== AMAC 2021–2023 ===== -->
-								<section>
-									<h3>Annual Mean Aggregation Change (AMAC), 2021–2023</h3>
-									<div class="table-group">
-										<table>
-											<thead><tr><th>Metric</th><th>NO₂</th><th>PM₂.₅</th><th>PM₁₀</th></tr></thead>
-											<tbody>
-											<tr><td>Minimum AMAC [µg/m³]</td><td>-8.434</td><td>-2.791</td><td>-4.275</td></tr>
-											<tr><td>Maximum AMAC [µg/m³]</td><td>1.886</td><td>0.339</td><td>0.286</td></tr>
-											<tr><td>Mean AMAC [µg/m³]</td><td>-1.765</td><td>-1.229</td><td>-1.657</td></tr>
-											</tbody>
-										</table>
-									</div>
-									<p>
-										All three Annual Mean Aggregation Change maps have negative mean values over valid pixels, indicating an average concentration decrease from 2021 to 2023. Positive AMAC values occur locally, so the maps should be interpreted spatially as well as statistically.
-									</p>
-								</section>
+                <!-- ===== Lab Outputs ===== -->
+                <section>
+                  <h3>Lab Outputs Represented on This Page</h3>
+                  <ul>
+                    <li>
+                      Step 3–5 concentration, AMAC, and land-cover transition raster outputs (delivered as GIS
+                      packages).
+                    </li>
+                    <li>Step 6 zonal statistics bar charts for NO₂ / Built Area, PM₂.₅ / Crops, and PM₁₀ / Trees.</li>
+                    <li>Step 7 bivariate population exposure layers (delivered as GIS packages).</li>
+                    <li>Step 8 population exposure pie/bar charts for NO₂, PM₂.₅, and PM₁₀.</li>
+                  </ul>
+                </section>
+              </article>
+            </div>
+          </div>
+        </div>
+      </section>
 
-								<!-- ===== Land-Cover Transition ===== -->
-								<section>
-									<h3>Land-Cover Transition: NO₂ / Built Area, PM₂.₅ / Crops, PM₁₀ / Trees</h3>
-									<p>
-										Assigned land-cover binary change masks use code 7 for NO₂ / Built Area, code 5 for PM₂.₅ / Crops, and code 2 for PM₁₀ / Trees. Values 1, 2, and 3 represent Stable class, class Gain, and class Loss; NoData, unrelated transitions, and cloud transitions (code 10) are excluded. Statistics are calculated from the <em>Germany_LCC_2021_2023</em> EPSG:3035 equal-area raster (QGIS unique values report). Pixel percent and area percent are computed within the Stable + Gain + Loss denominator for each assigned class.
-									</p>
-									<div class="table-group">
-										<table>
-											<thead><tr><th>Transition</th><th>Metric</th><th>NO₂ / Built Area</th><th>PM₂.₅ / Crops</th><th>PM₁₀ / Trees</th></tr></thead>
-											<tbody>
-											<tr><td rowspan="4">Stable</td><td>Pixel count</td><td>419,336,145</td><td>1,927,372,570</td><td>1,281,374,742</td></tr>
-											<tr><td>Pixel %</td><td>91.307%</td><td>93.901%</td><td>93.058%</td></tr>
-											<tr><td>Area [km²]</td><td>37,388.659</td><td>171,847.518</td><td>114,249.353</td></tr>
-											<tr><td>Area %</td><td>91.307%</td><td>93.901%</td><td>93.058%</td></tr>
-											<tr><td rowspan="4">Gain</td><td>Pixel count</td><td>24,879,929</td><td>53,907,177</td><td>51,381,506</td></tr>
-											<tr><td>Pixel %</td><td>5.417%</td><td>2.626%</td><td>3.731%</td></tr>
-											<tr><td>Area [km²]</td><td>2,218.333</td><td>4,806.447</td><td>4,581.255</td></tr>
-											<tr><td>Area %</td><td>5.417%</td><td>2.626%</td><td>3.731%</td></tr>
-											<tr><td rowspan="4">Loss</td><td>Pixel count</td><td>15,043,313</td><td>71,284,047</td><td>44,212,722</td></tr>
-											<tr><td>Pixel %</td><td>3.276%</td><td>3.473%</td><td>3.211%</td></tr>
-											<tr><td>Area [km²]</td><td>1,341.285</td><td>6,355.796</td><td>3,942.075</td></tr>
-											<tr><td>Area %</td><td>3.276%</td><td>3.473%</td><td>3.211%</td></tr>
-											</tbody>
-										</table>
-									</div>
-									<div class="table-group">
-										<h4>PM₁₀ / Trees — Transition Explanation</h4>
-										<table>
-											<tbody>
-												<tr><th>Tree persistence</th><td>96.665%</td></tr>
-												<tr><th>Main sources of Trees Gain</th><td>Crops 58.017%; Rangeland 32.619%; Built Area 6.792%</td></tr>
-												<tr><th>Main destinations of Trees Loss</th><td>Rangeland 43.173%; Crops 42.691%; Built Area 12.187%</td></tr>
-											</tbody>
-										</table>
-									</div>
-									<div class="table-group">
-										<h4>PM₂.₅ / Crops — Area Change 2021–2023</h4>
-										<table>
-											<tbody>
-												<tr><th>2021 Crops area</th><td>178,203.314 km²</td></tr>
-												<tr><th>2023 Crops area</th><td>176,653.965 km²</td></tr>
-												<tr><th>Area change</th><td>−1,549.349 km²</td></tr>
-												<tr><th>Percent point change</th><td>−0.4333</td></tr>
-												<tr><th>Other changes</th><td>Built Area +877.048 km²; Trees +639.180 km²; Rangeland +100.205 km²</td></tr>
-											</tbody>
-										</table>
-									</div>
-								</section>
+      <footer id="footer">
+        <div class="container">
+          <div id="copyright">
+            <ul>
+              <li>&copy; Group1_Germany</li>
+              <li><a href="http://html5up.net"></a></li>
+            </ul>
+          </div>
+        </div>
+      </footer>
+    </div>
 
-								<!-- ===== Pollutant Change by Land-Cover Transition (Zonal) ===== -->
-								<section>
-									<h3>Pollutant Change by Land-Cover Transition: NO₂ / Built Area, PM₂.₅ / Crops, PM₁₀ / Trees</h3>
-									<p>
-										Zonal statistics of AMAC raster values summarised by land-cover transition zone. Source: <em>Germany_*_zonal_statistics_2021_2023.gpkg</em> (EPSG:4326).
-									</p>
-									<div class="table-group">
-										<h4>Transition Zone Classes (1 = Stable, 2 = Gain, 3 = Loss)</h4>
-										<table>
-											<thead><tr><th>Zone</th><th>Meaning</th><th>NO₂</th><th>PM₂.₅</th><th>PM₁₀</th></tr></thead>
-											<tbody>
-											<tr><td>1</td><td>Stable — land cover unchanged 2021→2023</td><td>Built Area</td><td>Crops</td><td>Trees</td></tr>
-											<tr><td>2</td><td>Gain — land cover added</td><td>Built Area</td><td>Crops</td><td>Trees</td></tr>
-											<tr><td>3</td><td>Loss — land cover removed</td><td>Built Area</td><td>Crops</td><td>Trees</td></tr>
-											</tbody>
-										</table>
-									</div>
-									<div class="table-group">
-										<h4>Zonal Statistics — AMAC [µg/m³]</h4>
-										<table>
-											<thead><tr><th>Pollutant</th><th>Zone</th><th>Mean</th><th>Min</th><th>Max</th></tr></thead>
-											<tbody>
-											<tr><td rowspan="3">NO₂ / Built Area</td><td>1 · Stable</td><td>-2.034</td><td>-8.434</td><td>1.763</td></tr>
-											<tr><td>2 · Gain</td><td>-1.843</td><td>-3.012</td><td>-0.299</td></tr>
-											<tr><td>3 · Loss</td><td>-1.970</td><td>-4.495</td><td>-0.346</td></tr>
-											<tr><td rowspan="3">PM₂.₅ / Crops</td><td>1 · Stable</td><td>-1.234</td><td>-2.791</td><td>0.339</td></tr>
-											<tr><td>2 · Gain</td><td>-1.258</td><td>-2.791</td><td>0.339</td></tr>
-											<tr><td>3 · Loss</td><td>-1.201</td><td>-2.791</td><td>0.339</td></tr>
-											<tr><td rowspan="3">PM₁₀ / Trees</td><td>1 · Stable</td><td>-1.654</td><td>-4.275</td><td>0.002</td></tr>
-											<tr><td>2 · Gain</td><td>-1.650</td><td>-3.289</td><td>-0.499</td></tr>
-											<tr><td>3 · Loss</td><td>-1.552</td><td>-3.391</td><td>-0.503</td></tr>
-											</tbody>
-										</table>
-									</div>
-									<div class="chart-row">
-										<div class="plotly-chart">
-											<h4>NO₂ / Built Area</h4>
-											<iframe src="charts/no2_barchart_minmaxmean.html" frameborder="0" scrolling="no" style="width:100%;height:350px"></iframe>
-										</div>
-										<div class="plotly-chart">
-											<h4>PM₂.₅ / Crops</h4>
-											<iframe src="charts/pm2p5_barchart_minmaxmean.html" frameborder="0" scrolling="no" style="width:100%;height:350px"></iframe>
-										</div>
-										<div class="plotly-chart">
-											<h4>PM₁₀ / Trees</h4>
-											<iframe src="charts/pm10_barchart_minmaxmean.html" frameborder="0" scrolling="no" style="width:100%;height:350px"></iframe>
-										</div>
-									</div>
-									<p>
-										All transition-zone means are negative. PM₁₀ stable tree and tree gain zones show similar decreases (~ −1.65 µg/m³), tree loss is slightly weaker (~ −1.55 µg/m³). For PM₂.₅, crops gain shows the strongest mean decrease. For NO₂, stable Built Area has the strongest mean decrease.
-									</p>
-								</section>
-
-								<!-- ===== Population Exposure ===== -->
-								<section>
-									<h3>Population Exposure and Bivariate Results</h3>
-									<p>
-										Bivariate population exposure combines pollutant concentration class and population class using <strong>bivariate = pol_class_max × 10 + pop_class_median</strong>. Each bivariate layer has 402 GAUL Level 2 features, required fields are present, and the formula check returned zero mismatches for all three pollutants. The dissolved chart layers summarize exposure by <strong>pol_class_max</strong> using <strong>pop_sum</strong>.
-									</p>
-									<div class="table-group">
-										<h4>Concentration Class Definitions</h4>
-										<table>
-											<thead><tr><th>Class</th><th>NO₂ [µg/m³]</th><th>PM₂.₅ [µg/m³]</th><th>PM₁₀ [µg/m³]</th></tr></thead>
-											<tbody>
-											<tr><td>1</td><td>≤ 10</td><td>≤ 5</td><td>≤ 15</td></tr>
-											<tr><td>2</td><td>&gt; 10 – ≤ 25</td><td>&gt; 5 – ≤ 10</td><td>&gt; 15 – ≤ 31</td></tr>
-											<tr><td>3</td><td>&gt; 25 – ≤ 40</td><td>&gt; 10 – ≤ 20</td><td>&gt; 30 – ≤ 40</td></tr>
-											<tr><td>4</td><td>&gt; 40 – ≤ 50</td><td>&gt; 20 – ≤ 25</td><td>&gt; 40 – ≤ 50</td></tr>
-											<tr><td>5</td><td>&gt; 50</td><td>&gt; 25</td><td>&gt; 50</td></tr>
-											</tbody>
-										</table>
-										<p>Bivariate code = <strong>pol_class × 10 + pop_class</strong> (e.g. 32 = pollutant class 3, population class 2). Population classes: 1–5 = WorldPop 2023 quintiles (lowest to highest 20%).</p>
-									</div>
-									<div class="chart-row">
-										<div class="plotly-chart">
-											<h4>NO₂ Exposure</h4>
-											<iframe src="charts/no2_exposure_piechart.html" frameborder="0" scrolling="no" style="width:100%;height:350px"></iframe>
-										</div>
-										<div class="plotly-chart">
-											<h4>PM₂.₅ Exposure</h4>
-											<iframe src="charts/pm2p5_exposure_piechart.html" frameborder="0" scrolling="no" style="width:100%;height:350px"></iframe>
-										</div>
-										<div class="plotly-chart">
-											<h4>PM₁₀ Exposure</h4>
-											<iframe src="charts/pm10_exposure_piechart.html" frameborder="0" scrolling="no" style="width:100%;height:350px"></iframe>
-										</div>
-									</div>
-									<p>
-										NO₂ exposure is mostly class 2. PM₂.₅ exposure is almost entirely class 2. PM₁₀ exposure is mostly class 1, with a smaller class 2 component.
-									</p>
-								</section>
-
-								<!-- ===== Lab Outputs ===== -->
-								<section>
-									<h3>Lab Outputs Represented on This Page</h3>
-									<ul>
-										<li>Step 3–5 concentration, AMAC, and land-cover transition raster outputs (delivered as GIS packages).</li>
-										<li>Step 6 zonal statistics bar charts for NO₂ / Built Area, PM₂.₅ / Crops, and PM₁₀ / Trees.</li>
-										<li>Step 7 bivariate population exposure layers (delivered as GIS packages).</li>
-										<li>Step 8 population exposure pie/bar charts for NO₂, PM₂.₅, and PM₁₀.</li>
-									</ul>
-								</section>
-
-							</article>
-
-						</div>
-					</div>
-				</div>
-			</section>
-
-			<footer id="footer">
-				<div class="container">
-					<div id="copyright">
-						<ul>
-							<li>&copy; Untitled. All rights reserved</li><li> <a href="http://html5up.net"></a></li>
-						</ul>
-					</div>
-				</div>
-			</footer>
-
-		</div>
-
-		<script src="assets/js/jquery.min.js"></script>
-		<script src="assets/js/breakpoints.min.js"></script>
-		<script src="assets/js/util.js"></script>
-		<script src="assets/js/main.js"></script>
-
-	</body>
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/breakpoints.min.js"></script>
+    <script src="assets/js/util.js"></script>
+    <script src="assets/js/main.js"></script>
+  </body>
 </html>
