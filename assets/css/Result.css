@@ -1,54 +1,50 @@
-.result-figure { 
-  margin: 1.5em 0; 
-  text-align: center; 
+/* ── GIS Professional Table Styling ── */
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1em 0;
+  font-size: 0.9em;
+  line-height: 1.4;
+  font-variant-numeric: tabular-nums;
 }
-.result-figure img { 
-  display: block; 
-  max-width: 100%; 
-  height: auto; 
-  max-height: 70vh; 
-  object-fit: contain; 
-  margin: 0 auto; 
+
+th, td {
+  padding: 0.45em 0.7em;
+  vertical-align: middle;
+  text-align: left;
+  border-bottom: 1px solid #e0e0e0;
 }
-.result-figure.compact-map img { 
-  max-height: 65vh; 
+
+/* Header row */
+thead th {
+  font-weight: 600;
+  font-size: 0.82em;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: #555;
+  background: #f5f6f8;
+  border-bottom: 2px solid #d0d0d0;
+  padding: 0.55em 0.7em;
 }
-.result-figure.compact-chart img { 
-  max-height: 55vh; 
-}
-.result-figure figcaption { 
-  margin-top: 0.5em; 
-  color: #666; 
-  font-size: 0.9em; 
-  line-height: 1.35; 
-}
-.results-table, .vertical-table { 
-  width: 100%; 
-  border-collapse: collapse; 
-  margin: 0.75em 0 1.5em 0; 
-}
-.results-table th, .results-table td, 
-.vertical-table th, .vertical-table td { 
-  padding: 0.55em 0.75em; 
-  border-bottom: 1px solid #ddd; 
-  vertical-align: top; 
-}
-.results-table th, .vertical-table th { 
-  font-weight: 700; 
-  text-align: left; 
-}
-.results-table .num, .vertical-table .num, .num { 
-  text-align: right; 
-  font-variant-numeric: tabular-nums; 
-  white-space: nowrap; 
-}
-.vertical-table .metric { 
-  width: 55%; 
-}
-.table-group { 
-  margin: 1.2em 0; 
-}
-.results-table td.na, .results-table .na { 
-  color: #bbb; 
-  text-align: center; 
-}
+
+/* Zebra striping */
+tbody tr:nth-child(even) { background: #fafbfc; }
+tbody tr:nth-child(odd)  { background: #fff; }
+
+/* N/A or empty cells */
+td:empty { color: #bbb; text-align: center; }
+
+/* Figure styling */
+.result-figure { margin: 1em 0; text-align: center; }
+.result-figure img { max-width: 380px; max-height: 28vh; }
+
+/* Chart rows */
+.chart-row { display: flex; gap: 0.6em; justify-content: center; flex-wrap: nowrap; margin: 0.5em 0; width: 100%; }
+.plotly-chart { flex: 1 1 0; min-width: 0; }
+.plotly-chart h4 { margin: 0 0 0.3em 0; text-align: center; font-size: 0.9em; }
+.plotly-chart iframe { width: 100%; height: 320px; border: none; }
+
+/* Table group spacing */
+.table-group { margin: 1em 0; }
+.table-group h4 { font-size: 0.95em; margin: 0.8em 0 0.3em 0; color: #444; }
