@@ -1,111 +1,119 @@
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <!--
 	TXT by HTML5 UP
 	html5up.net | @ajlkn
 	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
 -->
 <html>
-	<head>
-		<title>Home</title>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<link rel="stylesheet" href="assets/css/main.css" />
-		<link rel="stylesheet" href="assets/css/index.css" />
-		
-	</head>
-	<body class="homepage is-preload">
-		<div id="page-wrapper">
+  <head>
+    <title>Home</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="assets/css/main.css" />
+    <link rel="stylesheet" href="assets/css/index.css" />
+  </head>
+  <body class="homepage is-preload">
+    <div id="page-wrapper">
+      <nav id="nav">
+        <ul>
+          <li class="current"><a href="index.html">Home</a></li>
+          <li><a href="Workflow.html">Workflow</a></li>
+          <li><a href="Results.html">Results</a></li>
+          <li><a href="WebGIS.html">WebGIS</a></li>
+        </ul>
+      </nav>
 
-			<nav id="nav">
-				<ul>
-					<li class="current"><a href="index.html">Home</a></li>
-					<li><a href="Workflow.html">Workflow</a></li>
-					<li><a href="Results.html">Results</a></li>
-					<li><a href="WebGIS.html">WebGIS</a></li>
-				</ul>
-			</nav>
+      <section id="banner">
+        <h2>Mapping Air Quality in Germany</h2>
+        <p>Land cover transitions, pollutant change, and population exposure, 2021–2023</p>
+      </section>
 
-			<section id="banner">
-				<h2>Mapping Air Quality in Germany</h2>
-				<p>Land cover transitions, pollutant change, and population exposure, 2021–2023</p>
-			</section>
+      <section id="main">
+        <div class="container">
+          <section>
+            <header>
+              <h2>From GIS processing to WebGIS results</h2>
+              <p>
+                Germany case study using CAMS air quality reanalysis, ESRI 10 m Annual Land Cover, WorldPop population,
+                and GAUL Level 2 administrative boundaries
+              </p>
+            </header>
+            <p>
+              All datasets were reprojected to WGS84 (EPSG:4326), clipped to Germany, classified, summarised with zonal
+              statistics, and prepared for web publication. The WebGIS supports map interpretation through multiple
+              basemaps, map controls, pollutant layers, pollutant-population exposure layers, and legends.
+            </p>
+          </section>
 
-			<section id="main">
-				<div class="container">
+          <section>
+            <h2>Overview</h2>
+            <div class="row">
+              <div class="col-3 col-6-medium col-12-small">
+                <section>
+                  <a href="#"><img src="images/pic01_data_sources.png" alt="" /></a>
+                  <h3><a href="#">Data sources</a></h3>
+                  <p>
+                    CAMS European air quality reanalysis (NO₂, PM₂.₅, PM₁₀), ESRI 10 m Annual Land Cover (2021 & 2023),
+                    WorldPop Population Counts (2023, 100 m), and GAUL Level 2 administrative boundaries. All layers
+                    reprojected to WGS84 (EPSG:4326) and clipped to Germany.
+                  </p>
+                </section>
+              </div>
+              <div class="col-3 col-6-medium col-12-small">
+                <section>
+                  <a href="#"><img src="images/pic02_processing.png" alt="" /></a>
+                  <h3><a href="#">Processing workflow</a></h3>
+                  <p>
+                    Step 1–2: pollutant monthly & annual average maps. Step 3: concentration maps by EU thresholds. Step
+                    4: Annual Mean Aggregation Change (AMAC, 2021−2023). Step 5: Land Cover Change detection (LCC) with
+                    Stability, Gain, and Loss. Step 6: zonal statistics (Mean, Min, Max; prefix Zone_). Step 7–8:
+                    pollutant-population exposure and WebGIS.
+                  </p>
+                </section>
+              </div>
+              <div class="col-3 col-6-medium col-12-small">
+                <section>
+                  <a href="#"><img src="images/pic03_results.png" alt="" /></a>
+                  <h3><a href="#">Main results</a></h3>
+                  <p>
+                    AMAC 2021→2023: NO₂ −1.765, PM₂.₅ −1.229, PM₁₀ −1.657 µg/m³. All transition zones (Stable, Gain,
+                    Loss) show negative mean values for Built Area (NO₂), Crops (PM₂.₅), and Trees (PM₁₀).
+                    Pollutant-population maps combine pollutant concentration classes with population exposure classes
+                    across GAUL Level 2 districts.
+                  </p>
+                </section>
+              </div>
+              <div class="col-3 col-6-medium col-12-small">
+                <section>
+                  <a href="#"><img src="images/pic04_webgis.png" alt="" /></a>
+                  <h3><a href="#">WebGIS output</a></h3>
+                  <p>
+                    Interactive WebGIS with OpenStreetMap & CARTO Positron basemaps, pollutant AMAC overlay,
+                    pollutant-population exposure layer (GAUL Level 2 districts), land-cover transition zones, scale
+                    bar, fullscreen, mouse position, layer switcher, and colour legends.
+                  </p>
+                </section>
+              </div>
+            </div>
+          </section>
+        </div>
+      </section>
 
-					<section>
-						<header>
-							<h2>From GIS processing to WebGIS results</h2>
-							<p>Germany case study using CAMS air quality reanalysis, ESRI 10 m Annual Land Cover, WorldPop population, and GAUL Level 2 administrative boundaries</p>
-						</header>
-						<p>
-							All datasets were reprojected to WGS84 (EPSG:4326), clipped to Germany, classified, summarised with zonal statistics, and prepared for web publication. The WebGIS supports map interpretation through multiple basemaps, map controls, pollutant layers, pollutant-population exposure layers, and legends.
-						</p>
-					</section>
+      <footer id="footer">
+        <div class="container">
+          <div id="copyright">
+            <ul>
+              <li>&copy; Polimi GIS Group1 Germany Air Quality Project</li>
+              <li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+            </ul>
+          </div>
+        </div>
+      </footer>
+    </div>
 
-					<section>
-						<h2>Overview</h2>
-						<div class="row">
-							<div class="col-3 col-6-medium col-12-small">
-								<section>
-									<a href="#"><img src="images/pic01_data_sources.png" alt="" /></a>
-									<h3><a href="#">Data sources</a></h3>
-									<p>
-										CAMS European air quality reanalysis (NO₂, PM₂.₅, PM₁₀), ESRI 10 m Annual Land Cover (2021 & 2023), WorldPop Population Counts (2023, 100 m), and GAUL Level 2 administrative boundaries. All layers reprojected to WGS84 (EPSG:4326) and clipped to Germany.
-									</p>
-								</section>
-							</div>
-							<div class="col-3 col-6-medium col-12-small">
-								<section>
-									<a href="#"><img src="images/pic02_processing.png" alt="" /></a>
-									<h3><a href="#">Processing workflow</a></h3>
-									<p>
-										Step 1–2: pollutant monthly & annual average maps. Step 3: concentration maps by EU thresholds. Step 4: Annual Mean Aggregation Change (AMAC, 2021−2023). Step 5: Land Cover Change detection (LCC) with Stability, Gain, and Loss. Step 6: zonal statistics (Mean, Min, Max; prefix Zone_). Step 7–8: pollutant-population exposure and WebGIS.
-									</p>
-								</section>
-							</div>
-							<div class="col-3 col-6-medium col-12-small">
-								<section>
-									<a href="#"><img src="images/pic03_results.png" alt="" /></a>
-									<h3><a href="#">Main results</a></h3>
-									<p>
-										AMAC 2021→2023: NO₂ −1.765, PM₂.₅ −1.229, PM₁₀ −1.657 µg/m³. All transition zones (Stable, Gain, Loss) show negative mean values for Built Area (NO₂), Crops (PM₂.₅), and Trees (PM₁₀). Pollutant-population maps combine pollutant concentration classes with population exposure classes across GAUL Level 2 districts.
-
-									</p>
-								</section>
-							</div>
-							<div class="col-3 col-6-medium col-12-small">
-								<section>
-									<a href="#"><img src="images/pic04_webgis.png" alt="" /></a>
-									<h3><a href="#">WebGIS output</a></h3>
-									<p>
-										Interactive WebGIS with OpenStreetMap & CARTO Positron basemaps, pollutant AMAC overlay, pollutant-population exposure layer (GAUL Level 2 districts), land-cover transition zones, scale bar, fullscreen, mouse position, layer switcher, and colour legends.
-
-									</p>
-								</section>
-							</div>
-						</div>
-					</section>
-
-				</div>
-			</section>
-
-			<footer id="footer">
-				<div class="container">
-					<div id="copyright">
-						<ul>
-							<li>&copy; Group1_Germany</li><li> <a href="http://html5up.net"></a></li>
-						</ul>
-					</div>
-				</div>
-			</footer>
-
-		</div>
-
-		<script src="assets/js/jquery.min.js"></script>
-		<script src="assets/js/breakpoints.min.js"></script>
-		<script src="assets/js/util.js"></script>
-		<script src="assets/js/main.js"></script>
-
-	</body>
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/breakpoints.min.js"></script>
+    <script src="assets/js/util.js"></script>
+    <script src="assets/js/main.js"></script>
+  </body>
 </html>
