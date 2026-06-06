@@ -33,22 +33,16 @@
 
 								<header>
 									<h2>Results</h2>
-									<p>Pollutant change, land-cover transitions, and population exposure</p>
+									<p>Pollutant change, land cover transitions, and population exposure</p>
 								</header>
 
 								<section>
 									<p>
-																			<section>
-										<p>
-											All input layers were reprojected to WGS84 (EPSG:4326) and clipped to Germany. The processing follows the eight-step GIS pipeline defined in Labs 2–4: monthly and annual pollutant maps (Steps 1–2), EU threshold concentration classification (Step 3), Annual Mean Aggregation Change 2021–2023 (Step 4), Land Cover Change detection with binary change masks (Step 5), zonal statistics correlating pollutant change with land-cover transitions (Step 6), pollutant-population exposure mapping (Step 7), and dissolved chart layers for exposure summaries (Step 8).
-										</p>
-									</section>
-
-									<!-- ===== Steps 1–2: Pollutant Data ===== -->
+																			<!-- ===== Annual Averages ===== -->
 									<section>
-										<h3>Steps 1–2: Pollutant Annual Averages, 2023</h3>
+										<h3>Annual Pollutant Averages, 2023</h3>
 										<p>
-											Monthly CAMS reanalysis rasters were aggregated to annual means for NO₂, PM₂.₅, and PM₁₀ using <em>r.series</em>. The table below summarises the valid-pixel statistics across Germany.
+											CAMS reanalysis monthly rasters aggregated to annual means (r.series). All three pollutants remain within the lower EU concentration classes across Germany.
 										</p>
 										<div class="table-group">
 											<table>
@@ -57,40 +51,17 @@
 												<tr><td>Minimum [µg/m³]</td><td>2.342</td><td>5.126</td><td>6.418</td></tr>
 												<tr><td>Maximum [µg/m³]</td><td>20.166</td><td>10.174</td><td>15.993</td></tr>
 												<tr><td>Mean [µg/m³]</td><td>7.646</td><td>7.485</td><td>11.244</td></tr>
-												<tr><td>Concentration classes present</td><td>1–2</td><td>2–3</td><td>1–2</td></tr>
+												<tr><td>Concentration classes present</td><td>1-2</td><td>2-3</td><td>1-2</td></tr>
 												</tbody>
 											</table>
 										</div>
 									</section>
 
-									<!-- ===== Step 3: Concentration Classes ===== -->
+									<!-- ===== AMAC ===== -->
 									<section>
-										<h3>Step 3: EU Concentration Classification</h3>
+										<h3>Annual Mean Aggregation Change (AMAC), 2021-2023</h3>
 										<p>
-											Annual average rasters were reclassified into five concentration levels according to the EU lab thresholds (Processing Toolbox → Reclassify by table). The thresholds differ by pollutant because each has distinct health guideline values: NO₂ 40 µg/m³, PM₂.₅ 25 µg/m³, PM₁₀ 40 µg/m³ annual limit.
-										</p>
-										<div class="table-group">
-											<table>
-												<thead><tr><th>Class</th><th>NO₂ [µg/m³]</th><th>PM₂.₅ [µg/m³]</th><th>PM₁₀ [µg/m³]</th></tr></thead>
-												<tbody>
-												<tr><td>1</td><td>≤ 10</td><td>≤ 5</td><td>≤ 15</td></tr>
-												<tr><td>2</td><td>&gt; 10 – ≤ 25</td><td>&gt; 5 – ≤ 10</td><td>&gt; 15 – ≤ 31</td></tr>
-												<tr><td>3</td><td>&gt; 25 – ≤ 40</td><td>&gt; 10 – ≤ 20</td><td>&gt; 30 – ≤ 40</td></tr>
-												<tr><td>4</td><td>&gt; 40 – ≤ 50</td><td>&gt; 20 – ≤ 25</td><td>&gt; 40 – ≤ 50</td></tr>
-												<tr><td>5</td><td>&gt; 50</td><td>&gt; 25</td><td>&gt; 50</td></tr>
-												</tbody>
-											</table>
-										</div>
-										<p>
-											Germany falls within the lower concentration classes: NO₂ and PM₁₀ contain classes 1–2; PM₂.₅ contains classes 2–3 (class 3 appears in only 2 valid raster pixels).
-										</p>
-									</section>
-
-									<!-- ===== Step 4: AMAC ===== -->
-									<section>
-										<h3>Step 4: Annual Mean Aggregation Change (AMAC), 2021–2023</h3>
-										<p>
-											The bi-temporal difference <strong>AMAC = A<sub>2023</sub> − A<sub>2021</sub></strong> was computed per pollutant using the Raster Calculator. This step quantifies the independent spatial evolution of air pollutants before integrating land-cover variables. Negative values (blue in the QML style) indicate improving air quality; positive values (red) indicate deteriorating conditions. This atmospheric change layer is cross-referenced with land-cover dynamics in Step 6.
+											<strong>AMAC = A<sub>2023</sub> - A<sub>2021</sub></strong> computed per pollutant with Raster Calculator. Negative values indicate decreasing concentrations; positive values indicate increasing concentrations.
 										</p>
 										<div class="table-group">
 											<table>
@@ -103,15 +74,15 @@
 											</table>
 										</div>
 										<p>
-											All three mean AMAC values are negative — Germany experienced a net decrease in pollutant concentrations from 2021 to 2023. Localised positive values exist and should be interpreted spatially alongside the land-cover analysis in Step 6.
+											All three mean AMAC values are negative : Germany experienced a net decrease in pollutant concentrations from 2021 to 2023. Localised positive values exist and should be interpreted spatially alongside the land cover analysis in Step 6.
 										</p>
 									</section>
 
 									<!-- ===== Step 5: Land Cover Change ===== -->
 									<section>
-										<h3>Step 5: Land Cover Change Detection, 2021–2023</h3>
+										<h3>Land Cover Change, 2021-2023</h3>
 										<p>
-											The ESRI 10 m Annual Land Cover rasters for 2021 and 2023 were combined using <strong>LCC = LC<sub>2021</sub> × 100 + LC<sub>2023</sub></strong>. Each student was assigned a land-cover class linked to their pollutant: NO₂ → Built Area (code 7), PM₂.₅ → Crops (code 5), PM₁₀ → Trees (code 2). Binary change masks classify each pixel as Stable (unchanged), Gain (newly added), or Loss (removed), excluding cloud-related transitions (code 10). Statistics were computed from the EPSG:3035 equal-area raster using the QGIS Raster layer unique values report. Pixel percent and area percent are computed within the Stable + Gain + Loss denominator for each assigned class.
+											ESRI 10 m Annual Land Cover combined: <strong>LCC = LC<sub>2021</sub> × 100 + LC<sub>2023</sub></strong>. Assigned classes: NO₂ to Built Area (7), PM₂.₅ to Crops (5), PM₁₀ to Trees (2). Binary change masks: Stable, Gain, Loss (clouds excluded). Statistics from EPSG:3035 equal-area raster (QGIS unique values report).
 										</p>
 										<div class="table-group">
 											<table>
@@ -133,7 +104,7 @@
 											</table>
 										</div>
 										<div class="table-group">
-											<h4>PM₁₀ / Trees — Transition Sources & Destinations</h4>
+											<h4>PM₁₀ / Trees Transition Sources & Destinations</h4>
 											<table>
 												<tbody>
 												<tr><th>Tree persistence (Stability rate)</th><td>96.665%</td></tr>
@@ -143,13 +114,13 @@
 											</table>
 										</div>
 										<div class="table-group">
-											<h4>PM₂.₅ / Crops — Area Change 2021–2023</h4>
+											<h4>PM₂.₅ / Crops Area Change 2021-2023</h4>
 											<table>
 												<tbody>
 												<tr><th>2021 Crops area</th><td>178,203.314 km²</td></tr>
 												<tr><th>2023 Crops area</th><td>176,653.965 km²</td></tr>
-												<tr><th>Area change</th><td>−1,549.349 km²</td></tr>
-												<tr><th>Percent point change</th><td>−0.4333</td></tr>
+												<tr><th>Area change</th><td>-1,549.349 km²</td></tr>
+												<tr><th>Percent point change</th><td>-0.4333</td></tr>
 												<tr><th>Other changes</th><td>Built Area +877.048 km²; Trees +639.180 km²; Rangeland +100.205 km²</td></tr>
 												</tbody>
 											</table>
@@ -158,23 +129,23 @@
 
 									<!-- ===== Step 6: Zonal Statistics ===== -->
 									<section>
-										<h3>Step 6: Zonal Statistics — Pollutant Change by Land-Cover Transition</h3>
+										<h3>Zonal Statistics: Pollutant Change by Land Cover Transition</h3>
 										<p>
-											To correlate atmospheric change with land-surface dynamics, the AMAC raster was resampled to match the ESRI 10 m resolution and zonal statistics (Mean, Minimum, Maximum; prefix <strong>Zone_</strong>) were computed within each transition zone polygon. The binary change mask was polygonised, dissolved, and used as the input vector layer. The zonal statistics layers and bar charts below quantify how pollutant concentrations changed inside Stable, Gain, and Loss areas for each assigned land-cover class.
+											AMAC raster resampled to 10 m, zonal statistics (Mean, Min, Max; prefix <strong>Zone_</strong>) computed within each transition zone polygon. Binary change mask to polygonise to dissolve to zonal statistics.
 										</p>
 										<div class="table-group">
 											<h4>Transition Zone Definitions</h4>
 											<table>
 												<thead><tr><th>Zone</th><th>Meaning</th><th>NO₂</th><th>PM₂.₅</th><th>PM₁₀</th></tr></thead>
 												<tbody>
-												<tr><td>1</td><td>Stable — land cover unchanged 2021→2023</td><td>Built Area</td><td>Crops</td><td>Trees</td></tr>
-												<tr><td>2</td><td>Gain — land cover added</td><td>Built Area</td><td>Crops</td><td>Trees</td></tr>
-												<tr><td>3</td><td>Loss — land cover removed</td><td>Built Area</td><td>Crops</td><td>Trees</td></tr>
+												<tr><td>1</td><td>Stable: land cover unchanged 2021 to 2023</td><td>Built Area</td><td>Crops</td><td>Trees</td></tr>
+												<tr><td>2</td><td>Gain: land cover added</td><td>Built Area</td><td>Crops</td><td>Trees</td></tr>
+												<tr><td>3</td><td>Loss: land cover removed</td><td>Built Area</td><td>Crops</td><td>Trees</td></tr>
 												</tbody>
 											</table>
 										</div>
 										<div class="table-group">
-											<h4>Zonal Statistics — AMAC [µg/m³]</h4>
+											<h4>Zonal Statistics: AMAC [µg/m³]</h4>
 											<table>
 												<thead><tr><th>Pollutant</th><th>Zone</th><th>Mean</th><th>Min</th><th>Max</th></tr></thead>
 												<tbody>
@@ -205,15 +176,15 @@
 											</div>
 										</div>
 										<p>
-											All transition-zone means are negative, confirming that pollutant concentrations declined regardless of land-cover dynamics. PM₁₀ stable tree and tree gain zones show similar decreases (~ −1.65 µg/m³). For PM₂.₅, crops gain shows the strongest mean decrease. For NO₂, stable Built Area has the strongest mean decrease.
+											All transition zone means are negative, confirming that pollutant concentrations declined regardless of land cover dynamics. PM₁₀ stable tree and tree gain zones show similar decreases (~ -1.65 µg/m³). For PM₂.₅, crops gain shows the strongest mean decrease. For NO₂, stable Built Area has the strongest mean decrease.
 										</p>
 									</section>
 
-									<!-- ===== Steps 7–8: Population Exposure ===== -->
+									<!-- ===== Steps 7-8: Population Exposure ===== -->
 									<section>
-										<h3>Steps 7–8: Population Exposure</h3>
+										<h3>Population Exposure</h3>
 										<p>
-											Step 7 combined the concentration class raster (Step 3) with WorldPop 2023 population quintile classes to create pollutant-population exposure layers (<strong>code = pol_class_max × 10 + pop_class_median</strong>). Each of the GAUL Level 2 districts received an exposure code. Step 8 dissolved these by <strong>pol_class_max</strong>, summing population counts (<strong>pop_sum</strong>) per concentration class. The formula check returned zero mismatches for all three pollutants. The charts below show the population share exposed to each concentration level.
+											Concentration class raster × WorldPop 2023 population quantiles to exposure layers (<strong>code = pol_class_max × 10 + pop_class_median</strong>) across GAUL Level 2 districts. Dissolved by concentration class (<strong>pop_sum</strong>). Zero formula mismatches for all three pollutants.
 										</p>
 										<div class="chart-row">
 											<div class="plotly-chart">
@@ -230,7 +201,7 @@
 											</div>
 										</div>
 										<p>
-											NO₂ exposure is mostly class 2. PM₂.₅ exposure is almost entirely class 2. PM₁₀ exposure is mostly class 1, with a smaller class 2 component. Population classes 1–5 are derived from WorldPop 2023 quintiles (lowest to highest 20% population density per 100 m pixel).
+											NO₂ exposure is mostly class 2. PM₂.₅ exposure is almost entirely class 2. PM₁₀ exposure is mostly class 1, with a smaller class 2 component. Population classes 1-5 are derived from WorldPop 2023 quantiles (lowest to highest 20% population density per 100 m pixel).
 										</p>
 									</section>
 
@@ -238,10 +209,10 @@
 								<section>
 									<h3>Lab Outputs Represented on This Page</h3>
 									<ul>
-										<li>Step 3–5 concentration, AMAC, and land-cover transition raster outputs (delivered as GIS packages).</li>
+										<li>Annual pollutant averages, AMAC, and land cover transition statistical tables (Steps 1-2, 4-5).</li>
 										<li>Step 6 zonal statistics bar charts for NO₂ / Built Area, PM₂.₅ / Crops, and PM₁₀ / Trees.</li>
-										<li>Step 7 pollutant-population exposure layers (delivered as GIS packages).</li>
-										<li>Step 8 population exposure pie/bar charts for NO₂, PM₂.₅, and PM₁₀.</li>
+										<li>Pollutant-population exposure layers (Step 7, delivered as GIS packages).</li>
+										<li>Population exposure charts for NO₂, PM₂.₅, and PM₁₀ (Step 8).</li>
 									</ul>
 								</section>
 
