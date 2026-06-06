@@ -28,6 +28,7 @@ const cartoLayer = new ol.layer.Tile({
 const wmsUrl = "https://www.gis-geoserver.polimi.it/geoserver/gisgeoserver_01/wms";
 const workspace = "gisgeoserver_01";
 
+// Build one GeoServer WMS tile layer from workspace.
 function createWmsLayer(title, layerName, visible = false) {
   return new ol.layer.Tile({
     title: title,
@@ -171,11 +172,13 @@ const typeLandCoverLayers = new ol.layer.Group({
 });
 
 // 5. Layer groups
+// Base map group used by the layer switcher.
 const basemapLayers = new ol.layer.Group({
   title: "Base Maps",
   layers: [satelliteLayer, osmLayer, cartoLayer],
 });
 
+// Overlay group organized by map/data product category.
 const overlayByCategory = new ol.layer.Group({
   title: "Overlay by Category",
   visible: true,
@@ -191,6 +194,7 @@ const overlayByCategory = new ol.layer.Group({
   ],
 });
 
+// Alternative overlay group organized by pollutant type.
 const overlayByType = new ol.layer.Group({
   title: "Overlay by Pollutant",
   visible: true,
@@ -199,6 +203,7 @@ const overlayByType = new ol.layer.Group({
 });
 
 // 6. Map
+// Initialize the map with Germany as the default view.
 const map = new ol.Map({
   target: "map",
   layers: [basemapLayers, overlayByCategory],
@@ -209,8 +214,20 @@ const map = new ol.Map({
 });
 
 // 7. Controls
+// Standard OpenLayers controls, quick zoom button for Germany, pointer cursor
 map.addControl(new ol.control.ScaleLine());
 map.addControl(new ol.control.FullScreen());
+map.addControl(
+  new ol.control.ZoomToExtent({
+    label: "🇩🇪",
+    tipLabel: "Zoom to Germany",
+    extent: ol.proj.transformExtent([5.0, 46.5, 16.0, 55.8], "EPSG:4326", "EPSG:3857"),
+  }),
+);
+map.on("pointermove", function (event) {
+  var hit = getFirstVisibleWmsLayer() != null;
+  map.getTargetElement().style.cursor = hit ? "pointer" : "";
+});
 
 map.addControl(
   new ol.control.MousePosition({
@@ -224,6 +241,7 @@ map.addControl(
 const layerSwitcher = new ol.control.LayerSwitcher({});
 map.addControl(layerSwitcher);
 
+// Custom sorting control for switching between the two overlay group structures.
 const groupingControl = document.createElement("div");
 groupingControl.className = "grouping-control ol-control";
 groupingControl.innerHTML = `
@@ -244,6 +262,7 @@ map.addControl(
   }),
 );
 
+// Legend panel; content is refreshed when visible WMS layers change.
 const legendControl = document.createElement("div");
 legendControl.className = "legend-control ol-control";
 legendControl.innerHTML = `
@@ -257,7 +276,7 @@ map.addControl(
   }),
 );
 
-// Map event popup
+// Popup used to show WMS feature information after a map click.
 var container = document.createElement("div");
 container.id = "popup";
 container.className = "ol-popup";
@@ -281,6 +300,7 @@ closer.onclick = function () {
   return false;
 };
 
+// Collect visible WMS layers from nested layer groups.
 function getVisibleWmsLayers(layers, visibleLayers) {
   layers.forEach(function (layer) {
     if (!layer.getVisible()) {
@@ -297,6 +317,7 @@ function getVisibleWmsLayers(layers, visibleLayers) {
   return visibleLayers;
 }
 
+// Use the first visible WMS layer as the active layer for legend and GetFeatureInfo.
 function getFirstVisibleWmsLayer() {
   const visibleLayers = getVisibleWmsLayers(map.getLayers(), []);
 
@@ -307,7 +328,7 @@ function getFirstVisibleWmsLayer() {
   return visibleLayers[0];
 }
 
-// Legend
+// Update the legend image using GeoServer's GetLegendGraphic response.
 function updateLegend() {
   var overlayLayer = getFirstVisibleWmsLayer();
   var legendContent = document.getElementById("legend-content");
@@ -337,6 +358,7 @@ function updateLegend() {
     "</div>";
 }
 
+// Keep the legend synchronized with layer visibility changes.
 function listenLayerChanges(layer) {
   layer.on("change:visible", updateLegend);
 
@@ -351,6 +373,7 @@ listenLayerChanges(overlayByCategory);
 listenLayerChanges(overlayByType);
 updateLegend();
 
+// Swap the visible overlay tree to category-based grouping.
 document.getElementById("sortCategory").addEventListener("change", function () {
   if (this.checked) {
     map.getLayers().setAt(1, overlayByCategory);
@@ -359,6 +382,7 @@ document.getElementById("sortCategory").addEventListener("change", function () {
   }
 });
 
+// Swap the visible overlay tree to pollutant-based grouping.
 document.getElementById("sortPollutant").addEventListener("change", function () {
   if (this.checked) {
     map.getLayers().setAt(1, overlayByType);
@@ -367,7 +391,7 @@ document.getElementById("sortPollutant").addEventListener("change", function () 
   }
 });
 
-// Map event
+// Query the active WMS layer and display feature information in the popup.
 map.on("singleclick", function (event) {
   var overlayLayer = getFirstVisibleWmsLayer();
 
@@ -396,9 +420,4 @@ map.on("singleclick", function (event) {
     .catch(function () {
       content.innerHTML = "<h5>" + overlayLayer.get("title") + "</h5><br><span>No feature information</span>";
     });
-});
-
-map.on("pointermove", function (event) {
-  var hit = getFirstVisibleWmsLayer() != null;
-  map.getTargetElement().style.cursor = hit ? "pointer" : "";
 });

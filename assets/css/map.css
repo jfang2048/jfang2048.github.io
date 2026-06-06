@@ -5,6 +5,10 @@ body {
   height: 100%;
 }
 
+#main {
+  padding-top: 1.5em;
+}
+
 .map-container {
   width: calc(100% - 60px);
   max-width: none;
