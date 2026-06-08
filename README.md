@@ -10,7 +10,7 @@ GIS laboratory project. Land cover transitions, pollutant change (2021-2023), an
 - **CAMS European Air Quality Reanalysis** — NO₂, PM₂.₅, PM₁₀ monthly fields, ~0.1°
 - **ESRI 10 m Annual Land Cover** — 2021 and 2023 tiles from ArcGIS Living Atlas
 - **WorldPop 2023** — unconstrained population counts, 100 m
-- **FAO GAUL Level 2** — 402 administrative districts
+- **GAUL Level 2** — 402 administrative districts
 
 ## Processing
 
