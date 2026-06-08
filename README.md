@@ -1,6 +1,5 @@
 # GIS_Lab_Group1_Germany
 
-
 # Mapping Air Quality in Germany
 
 GIS laboratory project. Land cover transitions, pollutant change (2021-2023), and population exposure for Germany.
